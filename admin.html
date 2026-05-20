@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PSIQX Admin — Control Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b0f;--bg2:#111116;--bg3:#17171e;--bg4:#1e1e27;--bg5:#252530;
+  --red:#e50914;--red2:#c40812;--red3:rgba(229,9,20,0.12);
+  --cyan:#00d4ff;--green:#22c55e;--gold:#f59e0b;--purple:#8b5cf6;--orange:#f97316;
+  --text:#f1f1f5;--t2:#b0b0c4;--t3:#6b6b82;--t4:#3a3a4e;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --glass:rgba(255,255,255,0.03);--glass2:rgba(255,255,255,0.07);
+  --shadow:0 4px 20px rgba(0,0,0,0.5);--shadow2:0 16px 48px rgba(0,0,0,0.7);
+  --sb:240px;--th:64px;--font:'Inter',sans-serif;--r:8px;--r2:14px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow:hidden;height:100vh}
+*::-webkit-scrollbar{width:5px;height:5px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px}
+*::-webkit-scrollbar-thumb:hover{background:var(--red)}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--font)}
+input,select,textarea{font-family:var(--font)}
+
+/* ── LOGIN ── */
+#loginPg{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;
+  justify-content:center;
+  background:radial-gradient(ellipse at 30% 40%,rgba(229,9,20,0.1) 0%,var(--bg) 65%)}
+.login-box{width:420px;max-width:calc(100vw - 32px);background:var(--bg3);
+  border:1px solid var(--border);border-radius:var(--r2);padding:40px;box-shadow:var(--shadow2)}
+.login-logo{font-size:28px;font-weight:800;letter-spacing:1px;color:var(--red);margin-bottom:4px}
+.login-logo span{color:var(--t3);font-weight:400}
+.login-sub{color:var(--t3);font-size:13px;margin-bottom:8px}
+.login-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red3);
+  border:1px solid rgba(229,9,20,0.2);color:var(--red);font-size:11px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:28px}
+.lfield{margin-bottom:16px}
+.lfield label{display:block;font-size:11px;font-weight:700;color:var(--t3);
+  letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px}
+.lfield input{width:100%;background:var(--bg4);border:1px solid var(--border);
+  border-radius:var(--r);padding:12px 14px;color:var(--text);font-size:14px;outline:none;transition:all 0.2s}
+.lfield input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red3)}
+.lfield input::placeholder{color:var(--t4)}
+.login-btn{width:100%;background:var(--red);color:#fff;border:none;border-radius:var(--r);
+  padding:12px;font-size:15px;font-weight:700;margin-top:4px;transition:all 0.2s}
+.login-btn:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(229,9,20,0.3)}
+.login-btn:disabled{opacity:0.6;transform:none;cursor:not-allowed}
+.login-err{background:rgba(229,9,20,0.08);border:1px solid rgba(229,9,20,0.25);color:#ff6b6b;
+  border-radius:var(--r);padding:10px 14px;font-size:13px;margin-top:12px;display:none}
+.login-err.on{display:block}
+.login-note{margin-top:20px;background:var(--bg4);border-radius:var(--r);
+  padding:14px;font-size:12px;color:var(--t3);line-height:1.7}
+.login-note strong{color:var(--t2)}
+
+/* ── MAIN APP LAYOUT ── */
+#app{display:none;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+#sb{position:fixed;left:0;top:0;bottom:0;width:var(--sb);background:var(--bg2);
+  border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:200;
+  transition:transform 0.3s cubic-bezier(0.4,0,0.2,1)}
+#sb.closed{transform:translateX(calc(-1 * var(--sb)))}
+.sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;
+  display:none;backdrop-filter:blur(4px)}
+.sb-overlay.on{display:block}
+.sb-logo{display:flex;align-items:center;gap:12px;padding:20px 18px;
+  border-bottom:1px solid var(--border);flex-shrink:0}
+.sb-logo-icon{width:34px;height:34px;background:var(--red);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex-shrink:0}
+.sb-logo-text{font-size:18px;font-weight:800;color:var(--red);letter-spacing:1px}
+.sb-logo-text span{color:var(--t3);font-weight:400;font-size:14px}
+.sb-nav{flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:none}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-section{font-size:10px;font-weight:700;color:var(--t4);letter-spacing:1.5px;
+  text-transform:uppercase;padding:14px 10px 6px;margin-top:4px}
+.nitem{width:100%;display:flex;align-items:center;gap:11px;background:none;border:none;
+  border-radius:var(--r);padding:10px 12px;color:var(--t3);font-size:13px;font-weight:500;
+  cursor:pointer;transition:all 0.18s;text-align:left;margin-bottom:1px;position:relative}
+.nitem:hover{background:var(--glass2);color:var(--t2)}
+.nitem.on{background:var(--red3);color:var(--red);font-weight:600}
+.nitem.on .ni-icon{filter:none}
+.ni-icon{font-size:17px;width:20px;text-align:center;flex-shrink:0}
+.ni-label{flex:1}
+.ni-badge{background:var(--red);color:#fff;font-size:9px;font-weight:700;
+  padding:2px 6px;border-radius:10px}
+.sb-footer{padding:12px;border-top:1px solid var(--border);flex-shrink:0}
+.sb-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--r);
+  cursor:pointer;transition:background 0.2s}
+.sb-user:hover{background:var(--glass2)}
+.sb-av{width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--red),#ff6b35);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px}
+.sb-uinfo{flex:1;min-width:0}
+.sb-uname{font-size:13px;font-weight:600}
+.sb-uemail{font-size:11px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-logout{background:var(--glass);border:1px solid var(--border);color:var(--t3);
+  width:30px;height:30px;border-radius:var(--r);display:flex;align-items:center;
+  justify-content:center;font-size:15px;transition:all 0.2s;flex-shrink:0}
+.sb-logout:hover{background:var(--red3);color:var(--red);border-color:rgba(229,9,20,0.3)}
+
+/* ── MAIN AREA ── */
+#main{margin-left:var(--sb);height:100vh;display:flex;flex-direction:column;
+  transition:margin-left 0.3s;overflow:hidden}
+#sb.closed~#main{margin-left:0}
+
+/* ── TOPBAR ── */
+#topbar{height:var(--th);background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;padding:0 24px;flex-shrink:0;position:relative;z-index:50}
+.tb-menu{background:var(--glass);border:1px solid var(--border);color:var(--t2);
+  width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;
+  justify-content:center;font-size:20px;transition:all 0.2s}
+.tb-menu:hover{background:var(--glass2)}
+#pgTitle{font-size:18px;font-weight:700;flex:1}
+.tb-right{display:flex;align-items:center;gap:10px}
+.tb-search{display:flex;align-items:center;gap:8px;background:var(--bg3);
+  border:1px solid var(--border);border-radius:var(--r);padding:8px 14px;width:220px}
+.tb-search input{background:none;border:none;color:var(--text);font-size:13px;outline:none;flex:1}
+.tb-search input::placeholder{color:var(--t4)}
+.tb-notif{position:relative;width:36px;height:36px;border-radius:var(--r);
+  background:var(--glass);border:1px solid var(--border);display:flex;
+  align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:all 0.2s}
+.tb-notif:hover{background:var(--glass2)}
+.notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;
+  border-radius:50%;background:var(--red)}
+.tb-av{width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red),#ff6b35);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--border2);transition:all 0.2s}
+.tb-av:hover{border-color:var(--red)}
+
+/* ── PAGE CONTENT ── */
+#pgContent{flex:1;overflow-y:auto;padding:24px}
+
+/* ── CARDS ── */
+.card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:22px}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:8px;flex-wrap:wrap}
+.card-hdr h3{font-size:15px;font-weight:700}
+
+/* ── STAT CARDS ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);
+  padding:20px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  position:relative;overflow:hidden;transition:all 0.2s}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-ic{font-size:28px;flex-shrink:0}
+.stat-body{flex:1}
+.stat-label{font-size:11px;color:var(--t3);font-weight:600;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:4px}
+.stat-val{font-size:28px;font-weight:800;line-height:1}
+.stat-delta{font-size:12px;color:var(--green);margin-top:4px}
+.stat-delta.down{color:var(--red)}
+.stat-glow{position:absolute;width:80px;height:80px;border-radius:50%;right:-16px;top:-16px;
+  opacity:0.1;filter:blur(24px);pointer-events:none}
+.sg1{background:var(--red)} .sg2{background:var(--cyan)} .sg3{background:var(--green)} .sg4{background:var(--gold)}
+
+/* ── GRID LAYOUTS ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.col-span-2{grid-column:span 2}
+.col-span-3{grid-column:span 3}
+
+/* ── CHARTS ── */
+.chart-wrap{height:260px;position:relative}
+.chart-wrap-sm{height:220px;position:relative}
+.chart-tabs{display:flex;gap:3px;background:var(--bg4);padding:4px;border-radius:8px}
+.ctab{background:none;border:none;color:var(--t3);font-size:12px;font-weight:600;
+  padding:5px 12px;border-radius:6px;transition:all 0.2s}
+.ctab.on{background:var(--red);color:#fff}
+.ctab:hover:not(.on){color:var(--t2)}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:600px}
+th{text-align:left;padding:10px 12px;color:var(--t3);font-weight:600;font-size:11px;
+  letter-spacing:0.8px;text-transform:uppercase;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle}
+tr:hover td{background:var(--glass)}
+tr:last-child td{border-bottom:none}
+.tthumb{width:42px;height:28px;border-radius:5px;object-fit:cover;background:var(--bg4);flex-shrink:0}
+.tmovie{display:flex;align-items:center;gap:10px}
+.tmovie-title{font-weight:600;font-size:13px}
+.tmovie-year{font-size:11px;color:var(--t4)}
+.num{color:var(--t2);font-size:13px}
+
+/* ── BADGES ── */
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:0.3px}
+.badge-active{background:rgba(34,197,94,0.1);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
+.badge-inactive{background:var(--bg5);color:var(--t3);border:1px solid var(--border)}
+.badge-banned{background:rgba(229,9,20,0.1);color:var(--red);border:1px solid rgba(229,9,20,0.2)}
+.badge-admin{background:rgba(139,92,246,0.1);color:var(--purple);border:1px solid rgba(139,92,246,0.2)}
+.badge-user{background:var(--bg5);color:var(--t3);border:1px solid var(--border)}
+.badge-pro{background:rgba(245,158,11,0.1);color:var(--gold);border:1px solid rgba(245,158,11,0.2)}
+.cat-badge{background:var(--bg4);border:1px solid var(--border);color:var(--t2);
+  font-size:11px;padding:3px 9px;border-radius:20px}
+
+/* ── TOGGLE BUTTON ── */
+.tog-btn{background:var(--bg4);border:1px solid var(--border);color:var(--t3);
+  border-radius:var(--r);padding:4px 10px;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.tog-btn.on{background:var(--red3);border-color:rgba(229,9,20,0.3);color:var(--red)}
+
+/* ── ACTION BUTTONS ── */
+.acts{display:flex;gap:5px}
+.ibtn{width:30px;height:30px;border:1px solid var(--border);background:var(--glass);
+  border-radius:7px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;transition:all 0.2s}
+.ibtn:hover.edit{background:rgba(0,212,255,0.08);border-color:var(--cyan)}
+.ibtn:hover.del{background:rgba(229,9,20,0.1);border-color:var(--red)}
+.ibtn:hover.warn{background:rgba(245,158,11,0.1);border-color:var(--gold)}
+.ibtn:hover.ok{background:rgba(34,197,94,0.08);border-color:var(--green)}
+.rank{width:22px;height:22px;border-radius:50%;background:var(--bg5);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+
+/* ── TOOLBAR ── */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.toolbar-r{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap}
+.srch-box{display:flex;align-items:center;gap:8px;background:var(--bg3);
+  border:1px solid var(--border);border-radius:var(--r);padding:9px 14px;min-width:240px;flex:1;max-width:360px}
+.srch-box input{background:none;border:none;color:var(--text);font-size:13px;outline:none;width:100%}
+.srch-box input::placeholder{color:var(--t3)}
+.sel{background:var(--bg3);border:1px solid var(--border);color:var(--t2);
+  border-radius:var(--r);padding:9px 12px;font-size:13px;outline:none;cursor:pointer}
+.sel:focus{border-color:var(--red)}
+
+/* ── BUTTONS ── */
+.btn-p{display:flex;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;
+  border-radius:var(--r);padding:9px 18px;font-size:13px;font-weight:600;transition:all 0.2s;white-space:nowrap}
+.btn-p:hover{background:var(--red2);transform:translateY(-1px);box-shadow:0 4px 14px rgba(229,9,20,0.3)}
+.btn-g{display:flex;align-items:center;gap:6px;background:var(--glass);color:var(--t2);
+  border:1px solid var(--border);border-radius:var(--r);padding:9px 18px;font-size:13px;transition:all 0.2s}
+.btn-g:hover{background:var(--glass2);color:var(--text)}
+.btn-danger{background:rgba(229,9,20,0.1);color:var(--red);border:1px solid rgba(229,9,20,0.25);
+  border-radius:var(--r);padding:9px 18px;font-size:13px;font-weight:600;transition:all 0.2s}
+.btn-danger:hover{background:rgba(229,9,20,0.2)}
+.btn-full{width:100%;justify-content:center}
+
+/* ── FORM STYLES ── */
+.form-wrap{max-width:1100px}
+.form-back{display:inline-flex;align-items:center;gap:6px;background:none;border:none;
+  color:var(--red);font-size:14px;margin-bottom:20px;transition:opacity 0.2s}
+.form-back:hover{opacity:0.7}
+.form-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start}
+.form-sec-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;
+  color:var(--t3);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.frow.r3{grid-template-columns:1fr 1fr 1fr}
+.fgroup{display:flex;flex-direction:column;gap:6px}
+.fgroup.full{grid-column:1/-1}
+.flabel{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:0.5px;text-transform:uppercase}
+.finput{background:var(--bg4);border:1px solid var(--border);border-radius:var(--r);
+  padding:10px 13px;color:var(--text);font-size:14px;outline:none;transition:all 0.2s;width:100%}
+.finput:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red3)}
+.finput::placeholder{color:var(--t4)}
+.finput.ta{resize:vertical;min-height:90px;line-height:1.6}
+.url-row{display:flex;gap:8px}
+.url-row .finput{flex:1}
+.up-btn{background:var(--bg5);border:1px solid var(--border);color:var(--t2);
+  border-radius:var(--r);padding:10px 13px;font-size:12px;font-weight:500;
+  white-space:nowrap;flex-shrink:0;transition:all 0.2s}
+.up-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.prog-wrap{background:var(--bg5);border-radius:20px;height:4px;margin-top:5px;overflow:hidden;display:none}
+.prog-fill{height:100%;background:var(--red);border-radius:20px;transition:width 0.2s}
+/* toggle switch */
+.sw-group{display:flex;flex-direction:column;gap:14px}
+.sw-row{display:flex;align-items:center;justify-content:space-between}
+.sw-row span{font-size:14px;color:var(--t2)}
+.sw{position:relative;display:inline-block;width:42px;height:22px;flex-shrink:0}
+.sw input{opacity:0;width:0;height:0;position:absolute}
+.sw-sl{position:absolute;inset:0;background:var(--bg5);border-radius:11px;
+  transition:all 0.3s;cursor:pointer;border:1px solid var(--border)}
+.sw-sl::before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;
+  background:#fff;border-radius:50%;transition:all 0.3s;box-shadow:0 1px 3px rgba(0,0,0,0.3)}
+.sw input:checked+.sw-sl{background:var(--red);border-color:var(--red)}
+.sw input:checked+.sw-sl::before{transform:translateX(20px)}
+/* color picker */
+.cpick{width:42px;height:38px;border:1px solid var(--border);border-radius:var(--r);
+  padding:3px;cursor:pointer;background:var(--bg4)}
+/* preview */
+.preview-box{background:var(--bg4);border:1px solid var(--border);border-radius:var(--r);
+  min-height:140px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.preview-ph{color:var(--t4);font-size:13px;text-align:center;padding:20px}
+
+/* ── CATEGORIES GRID ── */
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.cat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);
+  padding:16px;display:flex;align-items:center;gap:12px;
+  transition:all 0.2s;border-left:3px solid var(--c,var(--red))}
+.cat-card:hover{background:var(--bg4);border-color:var(--c,var(--red))}
+.cat-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.cat-info{flex:1}
+.cat-name{font-weight:700;font-size:14px}
+.cat-cnt{font-size:12px;color:var(--t3);margin-top:2px}
+
+/* ── CONTENT CONTROL ── */
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.content-list{display:flex;flex-direction:column;gap:2px;max-height:520px;overflow-y:auto}
+.cl-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);
+  transition:background 0.2s;border:1px solid transparent}
+.cl-item:hover{background:var(--glass)}
+.cl-item.hl{background:var(--red3);border-color:rgba(229,9,20,0.15)}
+.cl-thumb{width:44px;height:29px;object-fit:cover;border-radius:4px;flex-shrink:0;background:var(--bg5)}
+.cl-info{flex:1;min-width:0}
+.cl-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl-meta{font-size:11px;color:var(--t3)}
+
+/* ── ANALYTICS BARS ── */
+.anal-bars{display:flex;flex-direction:column;gap:12px}
+.abar-row{display:flex;align-items:center;gap:10px}
+.abar-rank{font-size:12px;color:var(--t3);width:18px;text-align:center;flex-shrink:0}
+.abar-thumb{width:34px;height:22px;object-fit:cover;border-radius:4px;flex-shrink:0;background:var(--bg4)}
+.abar-info{flex:1}
+.abar-title{font-size:13px;font-weight:500;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abar-track{height:5px;background:var(--bg5);border-radius:3px;overflow:hidden}
+.abar-fill{height:100%;border-radius:3px;transition:width 0.6s ease}
+.abar-val{font-size:12px;font-weight:700;flex-shrink:0;min-width:42px;text-align:right}
+
+/* ── USER CARD ── */
+.urow{display:flex;align-items:center;gap:10px;padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04)}
+.urow:last-child{border-bottom:none}
+.uav{width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--red),#ff6b35);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.uinfo{flex:1;min-width:0}
+.uname{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.uemail{font-size:11px;color:var(--t3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ── SETTINGS ── */
+.settings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+
+/* ── MODAL ── */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:500;
+  display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(8px)}
+.modal-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);
+  padding:28px;width:100%;max-width:460px;box-shadow:var(--shadow2)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.modal-hdr h3{font-size:17px;font-weight:700}
+.modal-x{background:none;border:none;color:var(--t3);font-size:20px;transition:color 0.2s}
+.modal-x:hover{color:var(--red)}
+.modal-acts{display:flex;gap:10px;margin-top:6px}
+
+/* ── CONFIRM ── */
+#confirmModal{display:none}
+#confirmModal.on{display:flex}
+
+/* ── TOAST ── */
+#toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--bg4);
+  border:1px solid var(--border2);border-radius:12px;padding:13px 20px;
+  font-size:13px;font-weight:500;box-shadow:var(--shadow2);
+  transform:translateY(80px);opacity:0;pointer-events:none;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+#toast.on{transform:translateY(0);opacity:1}
+#toast.ok{border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.08);color:var(--green)}
+#toast.er{border-color:rgba(229,9,20,0.3);background:rgba(229,9,20,0.08);color:#ff6b6b}
+
+/* ── EMPTY ── */
+.tbl-empty{text-align:center;padding:48px;color:var(--t4)}
+.tbl-empty-icon{font-size:40px;margin-bottom:12px}
+.tbl-empty p{font-size:14px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1200px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .grid-2,.grid-3,.content-grid{grid-template-columns:1fr}
+  .col-span-2,.col-span-3{grid-column:span 1}
+  .form-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .frow.r3{grid-template-columns:1fr}
+  .settings-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  #sb{transform:translateX(calc(-1 * var(--sb)))}
+  #sb:not(.closed){transform:translateX(0)}
+  #main{margin-left:0!important}
+  .tb-search{display:none}
+  #pgContent{padding:16px}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:1fr}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .toolbar-r{margin-left:0}
+  .srch-box{max-width:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ══ LOGIN ══ -->
+<div id="loginPg">
+  <div class="login-box">
+    <div class="login-logo">PSIQX<span> Admin</span></div>
+    <p class="login-sub">Platform Control Center</p>
+    <div class="login-badge">🔐 Admin Access Only</div>
+    <div class="lfield"><label>Admin Email</label><input id="lEmail" type="email" placeholder="admin@psiqx.com" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="lfield"><label>Password</label><input id="lPass" type="password" placeholder="••••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="login-btn" id="lBtn" onclick="doLogin()">Sign In to Admin</button>
+    <div class="login-err" id="lErr"></div>
+    <div class="login-note">
+      <strong>ℹ️ Setup:</strong> Create your admin account in Firebase Console → Authentication → Add User, then sign in here.<br/><br/>
+      <strong>🔒 Access Control:</strong> Add your email to <code>ADMIN_EMAILS</code> array in the script to restrict access. Leave it empty to allow any authenticated user.
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+<div id="app">
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSb()"></div>
+
+  <!-- SIDEBAR -->
+  <div id="sb">
+    <div class="sb-logo">
+      <div class="sb-logo-icon">▶</div>
+      <div class="sb-logo-text">PSIQX<span> Admin</span></div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">Main</div>
+      <button class="nitem on" data-pg="dashboard" onclick="goTo('dashboard')"><span class="ni-icon">📊</span><span class="ni-label">Dashboard</span></button>
+      <div class="sb-section">Movies</div>
+      <button class="nitem" data-pg="movies" onclick="goTo('movies')"><span class="ni-icon">🎬</span><span class="ni-label">All Movies</span></button>
+      <button class="nitem" data-pg="add-movie" onclick="goTo('add-movie')"><span class="ni-icon">➕</span><span class="ni-label">Add Movie</span><span class="ni-badge">NEW</span></button>
+      <button class="nitem" data-pg="categories" onclick="goTo('categories')"><span class="ni-icon">🏷️</span><span class="ni-label">Categories</span></button>
+      <div class="sb-section">Platform</div>
+      <button class="nitem" data-pg="users" onclick="goTo('users')"><span class="ni-icon">👥</span><span class="ni-label">Users</span></button>
+      <button class="nitem" data-pg="content" onclick="goTo('content')"><span class="ni-icon">🎛️</span><span class="ni-label">Content Control</span></button>
+      <button class="nitem" data-pg="analytics" onclick="goTo('analytics')"><span class="ni-icon">📈</span><span class="ni-label">Analytics</span></button>
+      <div class="sb-section">System</div>
+      <button class="nitem" data-pg="settings" onclick="goTo('settings')"><span class="ni-icon">⚙️</span><span class="ni-label">Settings</span></button>
+    </nav>
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-av" id="sbAv">A</div>
+        <div class="sb-uinfo">
+          <div class="sb-uname">Administrator</div>
+          <div class="sb-uemail" id="sbEmail">—</div>
+        </div>
+        <button class="sb-logout" onclick="doLogout()" title="Sign Out">⏻</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="topbar">
+      <button class="tb-menu" onclick="toggleSb()">☰</button>
+      <h1 id="pgTitle">Dashboard Overview</h1>
+      <div class="tb-right">
+        <div class="tb-search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" placeholder="Quick search..."/>
+        </div>
+        <div class="tb-notif" id="tbNotif" onclick="toggleNotif()">
+          🔔<div class="notif-dot" id="notifDot"></div>
+        </div>
+        <div class="tb-av" id="tbAv" onclick="goTo('settings')">A</div>
+      </div>
+    </div>
+    <div id="pgContent">
+      <div class="tbl-empty"><div class="tbl-empty-icon">⏳</div><p>Loading dashboard...</p></div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL -->
+  <div class="modal-back" id="confirmModal">
+    <div class="modal-box" style="max-width:380px">
+      <h3 style="margin-bottom:10px">Confirm Action</h3>
+      <p id="confirmMsg" style="color:var(--t3);font-size:14px;margin-bottom:24px;line-height:1.6"></p>
+      <div class="modal-acts">
+        <button class="btn-danger" id="confirmYes">Confirm</button>
+        <button class="btn-g" onclick="closeConfirm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FIREBASE + APP SCRIPT ══ -->
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}
+  from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,collection,getDocs,doc,setDoc,addDoc,updateDoc,deleteDoc,
+  query,orderBy,limit,where,serverTimestamp}
+  from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{getStorage,ref,uploadBytesResumable,getDownloadURL}
+  from"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+/* ── CONFIG ── */
+const cfg={
+  apiKey:"AIzaSyDmma0fnGeItKRr7gBVojEkEIJNjhPGKwc",
+  authDomain:"psiqx-movie.firebaseapp.com",
+  projectId:"psiqx-movie",
+  storageBucket:"psiqx-movie.firebasestorage.app",
+  messagingSenderId:"950855552839",
+  appId:"1:950855552839:web:04ccf84ed28b0443df0662"
+};
+const ADMIN_EMAILS=[]; /* Add your admin email here e.g. ["admin@gmail.com"] */
+
+const app=initializeApp(cfg);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const storage=getStorage(app);
+
+/* ── STATE ── */
+const S={
+  user:null,page:"dashboard",
+  movies:[],users:[],cats:[],
+  stats:{movies:0,users:0,views:0,downloads:0},
+  charts:{},editMovie:null,editCat:null
+};
+
+/* ── UTILS ── */
+function toast(msg,type=""){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.className="on"+(type?" "+type:"");
+  clearTimeout(window._tt); window._tt=setTimeout(()=>t.className="",3500);
+}
+function fmt(n){return(n||0).toLocaleString()}
+function fmtB(n){
+  n=n||0;
+  if(n>=1000000)return(n/1000000).toFixed(1)+"M";
+  if(n>=1000)return(n/1000).toFixed(1)+"K";
+  return String(n);
+}
+
+/* ── AUTH ── */
+onAuthStateChanged(auth,async u=>{
+  S.user=u;
+  if(!u){showLogin();return;}
+  if(ADMIN_EMAILS.length&&!ADMIN_EMAILS.includes(u.email)){
+    await signOut(auth); showLogin("Access denied. Not an admin account.");return;
+  }
+  document.getElementById("loginPg").style.display="none";
+  document.getElementById("app").style.display="flex";
+  const ini=(u.displayName||u.email||"A")[0].toUpperCase();
+  document.getElementById("sbAv").textContent=ini;
+  document.getElementById("tbAv").textContent=ini;
+  document.getElementById("sbEmail").textContent=u.email||"";
+  await loadAll();
+  renderPage();
+});
+
+function showLogin(msg){
+  document.getElementById("loginPg").style.display="flex";
+  document.getElementById("app").style.display="none";
+  if(msg){const e=document.getElementById("lErr");e.textContent=msg;e.classList.add("on");}
+}
+
+window.doLogin=async()=>{
+  const email=document.getElementById("lEmail").value.trim();
+  const pass=document.getElementById("lPass").value;
+  const btn=document.getElementById("lBtn");
+  const err=document.getElementById("lErr");
+  err.classList.remove("on");
+  if(!email||!pass){err.textContent="Fill in all fields.";err.classList.add("on");return;}
+  btn.disabled=true; btn.textContent="Signing in...";
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+  }catch(e){
+    const msgs={"auth/user-not-found":"No account found.","auth/wrong-password":"Wrong password.",
+      "auth/invalid-credential":"Invalid email or password.","auth/too-many-requests":"Too many attempts."};
+    err.textContent=msgs[e.code]||e.message; err.classList.add("on");
+  }finally{btn.disabled=false;btn.textContent="Sign In to Admin";}
+};
+
+window.doLogout=async()=>{await signOut(auth);};
+
+/* ── LOAD DATA ── */
+async function loadAll(){
+  try{
+    const[ms,us,cs]=await Promise.all([
+      getDocs(query(collection(db,"movies"),orderBy("createdAt","desc"))),
+      getDocs(collection(db,"users")),
+      getDocs(collection(db,"categories"))
+    ]);
+    S.movies=ms.docs.map(d=>({id:d.id,...d.data()}));
+    S.users=us.docs.map(d=>({id:d.id,...d.data()}));
+    S.cats=cs.docs.map(d=>({id:d.id,...d.data()}));
+    // compute stats
+    S.stats.movies=S.movies.length;
+    S.stats.users=S.users.length;
+    S.stats.views=S.movies.reduce((a,m)=>a+(m.views||0),0);
+    S.stats.downloads=S.movies.reduce((a,m)=>a+(m.downloads||0),0);
+  }catch(e){console.error("loadAll:",e);}
+}
+
+/* ── NAVIGATION ── */
+const PAGE_TITLES={
+  "dashboard":"Dashboard Overview","movies":"Movie Management","add-movie":"Add New Movie",
+  "categories":"Category Management","users":"User Management","content":"Content Control",
+  "analytics":"Analytics & Reports","settings":"Platform Settings"
+};
+
+window.goTo=(pg)=>{
+  S.page=pg;
+  document.querySelectorAll(".nitem").forEach(n=>n.classList.toggle("on",n.dataset.pg===pg));
+  document.getElementById("pgTitle").textContent=PAGE_TITLES[pg]||pg;
+  renderPage();
+  if(window.innerWidth<768)closeSb();
+};
+window.toggleSb=()=>{
+  const sb=document.getElementById("sb");
+  const ov=document.getElementById("sbOverlay");
+  sb.classList.toggle("closed");
+  ov.classList.toggle("on",!sb.classList.contains("closed"));
+};
+window.closeSb=()=>{
+  document.getElementById("sb").classList.add("closed");
+  document.getElementById("sbOverlay").classList.remove("on");
+};
+
+function renderPage(){
+  const c=document.getElementById("pgContent");
+  switch(S.page){
+    case"dashboard": c.innerHTML=renderDashboard(); initDashCharts(); break;
+    case"movies": c.innerHTML=renderMovies(); break;
+    case"add-movie": c.innerHTML=renderAddMovie(); break;
+    case"categories": c.innerHTML=renderCategories(); break;
+    case"users": c.innerHTML=renderUsers(); break;
+    case"content": c.innerHTML=renderContent(); break;
+    case"analytics": c.innerHTML=renderAnalytics(); initAnalyticsCharts(); break;
+    case"settings": c.innerHTML=renderSettings(); break;
+    default: c.innerHTML="";
+  }
+}
+
+/* ══════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════ */
+function renderDashboard(){
+  const top5=([...S.movies].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,5));
+  const rec=S.users.slice(0,5);
+  return`
+  <div class="stats-row">
+    ${statCard("🎬","Total Movies",fmt(S.stats.movies),"sg1","+"+Math.max(0,S.movies.filter(m=>m.createdAt).length)+" total","movies")}
+    ${statCard("👥","Total Users",fmt(S.stats.users),"sg2","All registered users","users")}
+    ${statCard("👁️","Total Views",fmtB(S.stats.views),"sg3","Across all movies","")}
+    ${statCard("⬇️","Downloads",fmtB(S.stats.downloads),"sg4","Total downloads","")}
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card col-span-2" id="mainChartCard">
+      <div class="card-hdr">
+        <h3>📊 Platform Activity</h3>
+        <div class="chart-tabs">
+          <button class="ctab on" onclick="swMainChart('views',this)">Views</button>
+          <button class="ctab" onclick="swMainChart('downloads',this)">Downloads</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-hdr"><h3>🍩 By Category</h3></div>
+      <div class="chart-wrap-sm"><canvas id="donutChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><h3>🆕 Recent Users</h3>
+        <button class="btn-g" style="padding:5px 12px;font-size:12px" onclick="goTo('users')">View All</button>
+      </div>
+      <div>${rec.length?rec.map(u=>`
+        <div class="urow">
+          <div class="uav">${(u.name||u.email||"U")[0].toUpperCase()}</div>
+          <div class="uinfo">
+            <div class="uname">${u.name||"User"} ${u.premium?'<span class="badge badge-pro">PRO</span>':''}</div>
+            <div class="uemail">${u.email||""}</div>
+          </div>
+          <span class="badge badge-${u.status||'active'}">${u.status||'active'}</span>
+        </div>`).join(""):`<div class="tbl-empty"><div class="tbl-empty-icon">👥</div><p>No users yet</p></div>`}</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-hdr"><h3>🔥 Top Movies by Views</h3>
+      <button class="btn-g" style="padding:5px 12px;font-size:12px" onclick="goTo('movies')">All Movies</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Movie</th><th>Category</th><th>Views</th><th>Downloads</th><th>Rating</th><th>Trending</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>${top5.length?top5.map((m,i)=>movieRow(m,i+1)).join(""):`<tr><td colspan="10" class="tbl-empty"><div class="tbl-empty-icon">🎬</div><p>No movies</p></td></tr>`}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function statCard(ic,label,val,glow,delta,pg){
+  return`<div class="stat-card" ${pg?`onclick="goTo('${pg}')"`:"style='cursor:default'"}>
+    <div class="stat-ic">${ic}</div>
+    <div class="stat-body">
+      <div class="stat-label">${label}</div>
+      <div class="stat-val">${val}</div>
+      <div class="stat-delta">${delta}</div>
+    </div>
+    <div class="stat-glow ${glow}"></div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   MOVIES PAGE
+══════════════════════════════════════ */
+function renderMovies(){
+  return`
+  <div class="toolbar">
+    <div class="srch-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search movies..." id="movSrch" oninput="filterMovies()"/>
+    </div>
+    <div class="toolbar-r">
+      <select class="sel" id="movCatFilter" onchange="filterMovies()">
+        <option value="">All Categories</option>
+        ${S.cats.map(c=>`<option value="${c.name}">${c.name}</option>`).join("")}
+        ${[...new Set(S.movies.map(m=>m.category).filter(Boolean))].filter(c=>!S.cats.find(x=>x.name===c)).map(c=>`<option value="${c}">${c}</option>`).join("")}
+      </select>
+      <select class="sel" id="movStatusFilter" onchange="filterMovies()">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+      <button class="btn-p" onclick="goTo('add-movie')">＋ Add Movie</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Movie</th><th>Category</th><th>Rating</th><th>Year</th><th>Views</th><th>Trending</th><th>Featured</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="movTbody">${movieTableRows(S.movies)}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function movieTableRows(list){
+  if(!list.length)return`<tr><td colspan="10"><div class="tbl-empty"><div class="tbl-empty-icon">🎬</div><p>No movies found</p></div></td></tr>`;
+  return list.map((m,i)=>movieRow(m,i+1)).join("");
+}
+
+function movieRow(m,i){
+  return`<tr>
+    <td><div class="rank">${i}</div></td>
+    <td><div class="tmovie">
+      <img class="tthumb" src="${m.thumbnail||""}" onerror="this.style.opacity='0.2'" alt=""/>
+      <div><div class="tmovie-title">${m.title||"—"}</div><div class="tmovie-year">${m.year||""}</div></div>
+    </div></td>
+    <td><span class="cat-badge">${m.category||"—"}</span></td>
+    <td style="color:var(--gold);font-weight:600">⭐ ${m.rating||"—"}</td>
+    <td class="num">${m.year||"—"}</td>
+    <td class="num">${fmt(m.views||0)}</td>
+    <td><button class="tog-btn${m.trending?" on":""}" onclick="togProp('${m.id}','trending',this)">${m.trending?"🔥 Yes":"— No"}</button></td>
+    <td><button class="tog-btn${m.featured?" on":""}" onclick="togProp('${m.id}','featured',this)">${m.featured?"⭐ Yes":"— No"}</button></td>
+    <td><span class="badge badge-${m.status||'active'}">${m.status||'active'}</span></td>
+    <td><div class="acts">
+      <button class="ibtn edit" onclick="editMovie('${m.id}')" title="Edit">✏️</button>
+      <button class="ibtn del" onclick="askDeleteMovie('${m.id}','${esc(m.title)}')" title="Delete">🗑️</button>
+    </div></td>
+  </tr>`;
+}
+
+window.filterMovies=()=>{
+  const q=(document.getElementById("movSrch")?.value||"").toLowerCase();
+  const cat=document.getElementById("movCatFilter")?.value||"";
+  const st=document.getElementById("movStatusFilter")?.value||"";
+  let list=S.movies;
+  if(q)list=list.filter(m=>m.title?.toLowerCase().includes(q)||m.category?.toLowerCase().includes(q));
+  if(cat)list=list.filter(m=>m.category===cat);
+  if(st)list=list.filter(m=>(m.status||"active")===st);
+  const tb=document.getElementById("movTbody");
+  if(tb)tb.innerHTML=movieTableRows(list);
+};
+
+window.togProp=async(id,prop,btn)=>{
+  const m=S.movies.find(x=>x.id===id);if(!m)return;
+  m[prop]=!m[prop];
+  try{await updateDoc(doc(db,"movies",id),{[prop]:m[prop]});}catch(e){toast("Update failed","er");return;}
+  btn.textContent=prop==="trending"?(m.trending?"🔥 Yes":"— No"):(m.featured?"⭐ Yes":"— No");
+  btn.classList.toggle("on",m[prop]);
+  toast(`${prop} ${m[prop]?"enabled":"disabled"}`,"ok");
+};
+
+window.editMovie=(id)=>{S.editMovie=S.movies.find(m=>m.id===id);goTo("add-movie");};
+window.askDeleteMovie=(id,title)=>{
+  showConfirm(`Delete "<strong>${title}</strong>"? This cannot be undone.`,async()=>{
+    try{await deleteDoc(doc(db,"movies",id));}catch(e){toast("Delete failed","er");return;}
+    S.movies=S.movies.filter(m=>m.id!==id);
+    S.stats.movies=S.movies.length;
+    goTo("movies"); toast("Movie deleted","ok");
+  });
+};
+
+/* ══════════════════════════════════════
+   ADD / EDIT MOVIE
+══════════════════════════════════════ */
+function renderAddMovie(){
+  const m=S.editMovie||{};
+  const isEdit=!!m.id;
+  const catOpts=()=>{
+    const allCats=[...new Set([...S.cats.map(c=>c.name),...S.movies.map(x=>x.category)].filter(Boolean))];
+    return allCats.map(c=>`<option value="${c}"${m.category===c?" selected":""}>${c}</option>`).join("");
+  };
+  return`
+  <div class="form-wrap">
+    <button class="form-back" onclick="S.editMovie=null;goTo('movies')">← Back to Movies</button>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:20px">${isEdit?"Edit Movie":"Add New Movie"}</h2>
+    <div class="form-grid">
+      <!-- LEFT: Main Form -->
+      <div>
+        <div class="card" style="margin-bottom:14px">
+          <div class="form-sec-title">Basic Information</div>
+          <div class="frow">
+            <div class="fgroup">
+              <label class="flabel">Movie Title *</label>
+              <input class="finput" id="fTitle" placeholder="Enter movie title" value="${m.title||''}"/>
+            </div>
+            <div class="fgroup">
+              <label class="flabel">Category *</label>
+              <select class="finput" id="fCat">
+                <option value="">Select category</option>
+                ${catOpts()}
+              </select>
+            </div>
+          </div>
+          <div class="fgroup full" style="margin-top:14px">
+            <label class="flabel">Description *</label>
+            <textarea class="finput ta" id="fDesc" placeholder="Movie description...">${m.description||''}</textarea>
+          </div>
+          <div class="frow r3" style="margin-top:14px">
+            <div class="fgroup">
+              <label class="flabel">Rating (0–10)</label>
+              <input class="finput" id="fRating" type="number" step="0.1" min="0" max="10" placeholder="8.5" value="${m.rating||''}"/>
+            </div>
+            <div class="fgroup">
+              <label class="flabel">Release Year</label>
+              <input class="finput" id="fYear" type="number" placeholder="${new Date().getFullYear()}" value="${m.year||''}"/>
+            </div>
+            <div class="fgroup">
+              <label class="flabel">Duration</label>
+              <input class="finput" id="fDur" placeholder="2h 15m" value="${m.duration||''}"/>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="form-sec-title">Media URLs</div>
+          ${urlField("Thumbnail URL","fThumb",m.thumbnail||"","image","https://...")}
+          ${urlField("Banner / Background URL","fBanner",m.banner||"","banner","https://...")}
+          <div class="fgroup full" style="margin-bottom:14px">
+            <label class="flabel">Video Stream URL</label>
+            <input class="finput" id="fVideo" placeholder="https://... (mp4 or HLS m3u8)" value="${m.videoUrl||''}"/>
+          </div>
+          ${urlField("Download URL","fDownload",m.downloadUrl||"","download","https://...")}
+        </div>
+      </div>
+      <!-- RIGHT: Sidebar -->
+      <div>
+        <div class="card" style="margin-bottom:14px">
+          <div class="form-sec-title">Visibility</div>
+          <div class="sw-group">
+            <div class="sw-row"><span>Trending</span><label class="sw"><input type="checkbox" id="fTrend" ${m.trending?"checked":""}/><span class="sw-sl"></span></label></div>
+            <div class="sw-row"><span>Featured (Hero Banner)</span><label class="sw"><input type="checkbox" id="fFeat" ${m.featured?"checked":""}/><span class="sw-sl"></span></label></div>
+            <div class="sw-row"><span>Active</span><label class="sw"><input type="checkbox" id="fActive" ${(!m.id||m.status==="active")?"checked":""}/><span class="sw-sl"></span></label></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:14px">
+          <div class="form-sec-title">Thumbnail Preview</div>
+          <div class="preview-box" id="prevBox">
+            ${m.thumbnail?`<img src="${m.thumbnail}" style="width:100%;height:100%;object-fit:cover;border-radius:8px"/>`:'<div class="preview-ph">Thumbnail will appear here</div>'}
+          </div>
+          <div style="margin-top:8px;font-weight:600;font-size:14px" id="prevTitle">${m.title||''}</div>
+          <div style="color:var(--t3);font-size:12px;margin-top:2px" id="prevMeta">${m.category||''} ${m.rating?"· ⭐"+m.rating:""}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn-p btn-full" onclick="saveMovie('${m.id||''}')">${isEdit?"💾 Save Changes":"➕ Add Movie"}</button>
+          <button class="btn-g btn-full" onclick="S.editMovie=null;goTo('movies')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function urlField(label,id,val,type,ph){
+  return`<div class="fgroup full" style="margin-bottom:14px">
+    <label class="flabel">${label}</label>
+    <div class="url-row">
+      <input class="finput" id="${id}" placeholder="${ph}" value="${val||''}" oninput="if('${id}'==='fThumb')updatePreview()"/>
+      <button class="up-btn" onclick="trigUp('${type}','${id}')">📤 Upload</button>
+      <input type="file" id="upFile-${type}" accept="${type==='download'?'video/*,*/*':'image/*'}" style="display:none" onchange="handleUpload('${type}','${id}',this)"/>
+    </div>
+    <div class="prog-wrap" id="progWrap-${type}"><div class="prog-fill" id="progFill-${type}"></div></div>
+  </div>`;
+}
+
+window.trigUp=(type,fieldId)=>document.getElementById("upFile-"+type).click();
+
+window.handleUpload=async(type,fieldId,input)=>{
+  const file=input.files[0];if(!file)return;
+  const path=`${type}s/${Date.now()}_${file.name}`;
+  const pw=document.getElementById("progWrap-"+type);
+  const pf=document.getElementById("progFill-"+type);
+  if(pw)pw.style.display="block";
+  try{
+    const sr=ref(storage,path);
+    const task=uploadBytesResumable(sr,file);
+    task.on("state_changed",snap=>{
+      const p=(snap.bytesTransferred/snap.totalBytes*100).toFixed(0);
+      if(pf)pf.style.width=p+"%";
+    },err=>toast("Upload error: "+err.message,"er"),
+    async()=>{
+      const url=await getDownloadURL(task.snapshot.ref);
+      const el=document.getElementById(fieldId);
+      if(el){el.value=url; if(fieldId==="fThumb")updatePreview();}
+      toast("Upload complete ✓","ok");
+      if(pw)setTimeout(()=>{pw.style.display="none";pf.style.width="0";},2000);
+    });
+  }catch(e){toast("Storage error — check Firebase config","er");}
+};
+
+function updatePreview(){
+  const url=document.getElementById("fThumb")?.value;
+  const title=document.getElementById("fTitle")?.value;
+  const cat=document.getElementById("fCat")?.value;
+  const rating=document.getElementById("fRating")?.value;
+  const pb=document.getElementById("prevBox");
+  if(pb&&url)pb.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.opacity='.2'"/>`;
+  if(document.getElementById("prevTitle"))document.getElementById("prevTitle").textContent=title||"";
+  if(document.getElementById("prevMeta"))document.getElementById("prevMeta").textContent=`${cat||""} ${rating?"· ⭐"+rating:""}`;
+}
+// live preview on typing
+document.addEventListener("input",e=>{
+  if(["fTitle","fCat","fRating","fThumb"].includes(e.target.id))updatePreview();
+});
+
+window.saveMovie=async(id)=>{
+  const data={
+    title:document.getElementById("fTitle")?.value?.trim(),
+    description:document.getElementById("fDesc")?.value?.trim(),
+    category:document.getElementById("fCat")?.value,
+    rating:parseFloat(document.getElementById("fRating")?.value)||0,
+    year:parseInt(document.getElementById("fYear")?.value)||new Date().getFullYear(),
+    duration:document.getElementById("fDur")?.value?.trim(),
+    thumbnail:document.getElementById("fThumb")?.value?.trim(),
+    banner:document.getElementById("fBanner")?.value?.trim(),
+    videoUrl:document.getElementById("fVideo")?.value?.trim(),
+    downloadUrl:document.getElementById("fDownload")?.value?.trim(),
+    trending:document.getElementById("fTrend")?.checked||false,
+    featured:document.getElementById("fFeat")?.checked||false,
+    status:document.getElementById("fActive")?.checked?"active":"inactive",
+    updatedAt:serverTimestamp()
+  };
+  if(!data.title){toast("Title is required","er");return;}
+  if(!data.category){toast("Category is required","er");return;}
+  try{
+    if(id){
+      await updateDoc(doc(db,"movies",id),data);
+      const idx=S.movies.findIndex(m=>m.id===id);
+      if(idx>-1)S.movies[idx]={...S.movies[idx],...data};
+      toast("Movie updated ✓","ok");
+    }else{
+      data.createdAt=serverTimestamp();data.views=0;data.downloads=0;
+      const r=await addDoc(collection(db,"movies"),data);
+      S.movies.unshift({id:r.id,...data});
+      S.stats.movies=S.movies.length;
+      toast("Movie added ✓","ok");
+    }
+    S.editMovie=null; goTo("movies");
+  }catch(e){toast("Save error: "+e.message,"er");}
+};
+
+/* ══════════════════════════════════════
+   CATEGORIES
+══════════════════════════════════════ */
+function renderCategories(){
+  const catColors=["#e50914","#00d4ff","#8b5cf6","#f59e0b","#ff69b4","#f97316","#22c55e","#ff1493","#06b6d4","#a855f7"];
+  return`
+  <div class="toolbar">
+    <h2 style="font-size:17px;font-weight:700">Manage Categories <span style="color:var(--t3);font-weight:400;font-size:14px">(${S.cats.length})</span></h2>
+    <div class="toolbar-r">
+      <button class="btn-p" onclick="openCatModal()">＋ Add Category</button>
+    </div>
+  </div>
+  ${S.cats.length?`<div class="cats-grid">${S.cats.map((c,i)=>`
+    <div class="cat-card" style="--c:${c.color||catColors[i%catColors.length]}">
+      <div class="cat-dot" style="background:${c.color||catColors[i%catColors.length]}"></div>
+      <div class="cat-info">
+        <div class="cat-name">${c.name}</div>
+        <div class="cat-cnt">${S.movies.filter(m=>m.category===c.name).length} movies</div>
+      </div>
+      <div class="acts">
+        <button class="ibtn edit" onclick="openCatModal('${c.id}')">✏️</button>
+        <button class="ibtn del" onclick="askDeleteCat('${c.id}','${esc(c.name)}')">🗑️</button>
+      </div>
+    </div>`).join("")}</div>`
+  :`<div class="card"><div class="tbl-empty"><div class="tbl-empty-icon">🏷️</div><p>No categories yet. Add one!</p></div></div>`}
+
+  <div class="modal-back" id="catModal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <h3 id="catModalTitle">Add Category</h3>
+        <button class="modal-x" onclick="closeCatModal()">✕</button>
+      </div>
+      <div class="fgroup" style="margin-bottom:14px">
+        <label class="flabel">Category Name</label>
+        <input class="finput" id="cName" placeholder="e.g. Thriller"/>
+      </div>
+      <div class="fgroup" style="margin-bottom:6px">
+        <label class="flabel">Color</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="color" class="cpick" id="cColor" value="#e50914" oninput="document.getElementById('cColorHex').value=this.value"/>
+          <input class="finput" id="cColorHex" placeholder="#e50914" value="#e50914" style="flex:1"
+            oninput="if(/^#[0-9a-f]{6}$/i.test(this.value))document.getElementById('cColor').value=this.value"/>
+        </div>
+      </div>
+      <div class="modal-acts" style="margin-top:20px">
+        <button class="btn-p" onclick="saveCat()">Save Category</button>
+        <button class="btn-g" onclick="closeCatModal()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+window.openCatModal=(id)=>{
+  S.editCat=id?S.cats.find(c=>c.id===id):null;
+  const c=S.editCat;
+  document.getElementById("catModalTitle").textContent=c?"Edit Category":"Add Category";
+  document.getElementById("cName").value=c?.name||"";
+  document.getElementById("cColor").value=c?.color||"#e50914";
+  document.getElementById("cColorHex").value=c?.color||"#e50914";
+  document.getElementById("catModal").style.display="flex";
+};
+window.closeCatModal=()=>{if(document.getElementById("catModal"))document.getElementById("catModal").style.display="none";};
+
+window.saveCat=async()=>{
+  const name=document.getElementById("cName").value.trim();
+  const color=document.getElementById("cColor").value;
+  if(!name){toast("Name required","er");return;}
+  try{
+    if(S.editCat){
+      await updateDoc(doc(db,"categories",S.editCat.id),{name,color});
+      Object.assign(S.editCat,{name,color});
+    }else{
+      const r=await addDoc(collection(db,"categories"),{name,color,createdAt:serverTimestamp()});
+      S.cats.push({id:r.id,name,color});
+    }
+    closeCatModal(); renderPage(); toast("Category saved ✓","ok");
+  }catch(e){toast("Error: "+e.message,"er");}
+};
+
+window.askDeleteCat=(id,name)=>{
+  showConfirm(`Delete category "<strong>${name}</strong>"?`,async()=>{
+    try{await deleteDoc(doc(db,"categories",id));}catch(e){toast("Delete failed","er");return;}
+    S.cats=S.cats.filter(c=>c.id!==id);
+    renderPage(); toast("Category deleted","ok");
+  });
+};
+
+/* ══════════════════════════════════════
+   USERS
+══════════════════════════════════════ */
+function renderUsers(){
+  return`
+  <div class="toolbar">
+    <div class="srch-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="Search users..." oninput="filterUsers(this.value)"/>
+    </div>
+    <div class="toolbar-r">
+      <select class="sel" onchange="filterUsersSt(this.value)">
+        <option value="">All Status</option>
+        <option value="active">Active</option>
+        <option value="banned">Banned</option>
+      </select>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>User</th><th>Email</th><th>Role</th><th>Status</th><th>Premium</th><th>Joined</th><th>Watched</th><th>Actions</th></tr></thead>
+        <tbody id="userTbody">${userRows(S.users)}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function userRows(list){
+  if(!list.length)return`<tr><td colspan="8"><div class="tbl-empty"><div class="tbl-empty-icon">👥</div><p>No users found</p></div></td></tr>`;
+  return list.map(u=>`
+  <tr>
+    <td><div style="display:flex;align-items:center;gap:9px">
+      <div class="uav">${(u.name||u.email||"U")[0].toUpperCase()}</div>
+      <span style="font-weight:500;font-size:13px">${u.name||"—"}</span>
+    </div></td>
+    <td style="font-size:12px;color:var(--t3)">${u.email||"—"}</td>
+    <td><span class="badge badge-${u.role||'user'}">${u.role||"user"}</span></td>
+    <td><span class="badge badge-${u.status||'active'}">${u.status||"active"}</span></td>
+    <td>${u.premium?'<span class="badge badge-pro">PRO</span>':'<span style="color:var(--t4)">—</span>'}</td>
+    <td style="font-size:12px;color:var(--t3)">${u.createdAt?.seconds?new Date(u.createdAt.seconds*1000).toLocaleDateString():u.joined||"—"}</td>
+    <td class="num">${u.watchCount||0}</td>
+    <td><div class="acts">
+      <button class="ibtn ${u.status==='banned'?'ok':'warn'}" onclick="togBan('${u.id}')" title="${u.status==='banned'?'Unban':'Ban'}">${u.status==='banned'?"✅":"🚫"}</button>
+      <button class="ibtn edit" onclick="togPremium('${u.id}')" title="${u.premium?'Remove Premium':'Grant Premium'}">${u.premium?"⭐":"💎"}</button>
+      <button class="ibtn del" onclick="askDeleteUser('${u.id}','${esc(u.name||u.email)}')" title="Delete">🗑️</button>
+    </div></td>
+  </tr>`).join("");
+}
+
+window.filterUsers=(q)=>{
+  const list=q?S.users.filter(u=>(u.name||"").toLowerCase().includes(q.toLowerCase())||(u.email||"").toLowerCase().includes(q.toLowerCase())):S.users;
+  document.getElementById("userTbody").innerHTML=userRows(list);
+};
+window.filterUsersSt=(st)=>{
+  const list=st?S.users.filter(u=>(u.status||"active")===st):S.users;
+  document.getElementById("userTbody").innerHTML=userRows(list);
+};
+
+window.togBan=async(id)=>{
+  const u=S.users.find(x=>x.id===id);if(!u)return;
+  u.status=u.status==="banned"?"active":"banned";
+  try{await updateDoc(doc(db,"users",id),{status:u.status});}catch(e){toast("Update failed","er");return;}
+  document.getElementById("userTbody").innerHTML=userRows(S.users);
+  toast(`User ${u.status==="banned"?"banned":"unbanned"}`,"ok");
+};
+window.togPremium=async(id)=>{
+  const u=S.users.find(x=>x.id===id);if(!u)return;
+  u.premium=!u.premium;
+  try{await updateDoc(doc(db,"users",id),{premium:u.premium});}catch(e){toast("Update failed","er");return;}
+  document.getElementById("userTbody").innerHTML=userRows(S.users);
+  toast(`Premium ${u.premium?"granted":"removed"}`,"ok");
+};
+window.askDeleteUser=(id,name)=>{
+  showConfirm(`Delete user "<strong>${name}</strong>"? This is permanent.`,async()=>{
+    try{await deleteDoc(doc(db,"users",id));}catch(e){toast("Delete failed","er");return;}
+    S.users=S.users.filter(u=>u.id!==id);
+    S.stats.users=S.users.length;
+    document.getElementById("userTbody").innerHTML=userRows(S.users);
+    toast("User deleted","ok");
+  });
+};
+
+/* ══════════════════════════════════════
+   CONTENT CONTROL
+══════════════════════════════════════ */
+function renderContent(){
+  return`
+  <div class="content-grid">
+    <div class="card">
+      <div class="card-hdr">
+        <h3>⭐ Featured Movies</h3>
+        <span style="font-size:12px;color:var(--t3)">Shown in Hero Banner</span>
+      </div>
+      <div class="content-list">${S.movies.map(m=>`
+        <div class="cl-item${m.featured?" hl":""}">
+          <img class="cl-thumb" src="${m.thumbnail||""}" onerror="this.style.opacity='0.2'" alt=""/>
+          <div class="cl-info">
+            <div class="cl-title">${m.title}</div>
+            <div class="cl-meta">${m.category||""} · ${m.year||""}</div>
+          </div>
+          <label class="sw" style="flex-shrink:0">
+            <input type="checkbox" ${m.featured?"checked":""} onchange="togPropInline('${m.id}','featured',this)"/>
+            <span class="sw-sl"></span>
+          </label>
+        </div>`).join("")||'<div class="tbl-empty"><p>No movies</p></div>'}</div>
+    </div>
+    <div class="card">
+      <div class="card-hdr">
+        <h3>🔥 Trending Movies</h3>
+        <span style="font-size:12px;color:var(--t3)">Shown in Trending row</span>
+      </div>
+      <div class="content-list">${S.movies.map(m=>`
+        <div class="cl-item${m.trending?" hl":""}">
+          <img class="cl-thumb" src="${m.thumbnail||""}" onerror="this.style.opacity='0.2'" alt=""/>
+          <div class="cl-info">
+            <div class="cl-title">${m.title}</div>
+            <div class="cl-meta">${m.category||""} · ${m.year||""}</div>
+          </div>
+          <label class="sw" style="flex-shrink:0">
+            <input type="checkbox" ${m.trending?"checked":""} onchange="togPropInline('${m.id}','trending',this)"/>
+            <span class="sw-sl"></span>
+          </label>
+        </div>`).join("")||'<div class="tbl-empty"><p>No movies</p></div>'}</div>
+    </div>
+  </div>`;
+}
+
+window.togPropInline=async(id,prop,input)=>{
+  const m=S.movies.find(x=>x.id===id);if(!m)return;
+  m[prop]=input.checked;
+  try{await updateDoc(doc(db,"movies",id),{[prop]:m[prop]});}catch(e){toast("Update failed","er");input.checked=!input.checked;return;}
+  const item=input.closest(".cl-item");
+  if(item)item.classList.toggle("hl",m[prop]);
+  toast(`${prop} ${m[prop]?"enabled":"disabled"}`,"ok");
+};
+
+/* ══════════════════════════════════════
+   ANALYTICS
+══════════════════════════════════════ */
+function renderAnalytics(){
+  const topV=[...S.movies].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,8);
+  const topD=[...S.movies].sort((a,b)=>(b.downloads||0)-(a.downloads||0)).slice(0,8);
+  return`
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card col-span-2" id="aLineCard">
+      <div class="card-hdr">
+        <h3>📈 Views & Downloads by Month</h3>
+        <div class="chart-tabs">
+          <button class="ctab on" onclick="swALine('all',this)">All</button>
+          <button class="ctab" onclick="swALine('views',this)">Views</button>
+          <button class="ctab" onclick="swALine('downloads',this)">Downloads</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="aLineChart"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-hdr"><h3>📊 Movies by Category</h3></div>
+      <div class="chart-wrap-sm"><canvas id="aBarChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><h3>👥 User Growth</h3></div>
+      <div class="chart-wrap-sm"><canvas id="aUserChart"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-hdr"><h3>🎬 Most Watched</h3></div>
+      <div class="anal-bars">${topV.length?topV.map((m,i)=>`
+        <div class="abar-row">
+          <span class="abar-rank">${i+1}</span>
+          <img class="abar-thumb" src="${m.thumbnail||""}" onerror="this.style.opacity='0.2'" alt=""/>
+          <div class="abar-info">
+            <div class="abar-title">${m.title}</div>
+            <div class="abar-track"><div class="abar-fill" style="width:${Math.round((m.views||0)/(topV[0]?.views||1)*100)}%;background:var(--red)"></div></div>
+          </div>
+          <span class="abar-val" style="color:var(--red)">${fmtB(m.views||0)}</span>
+        </div>`).join(""):`<div class="tbl-empty"><p>No view data yet</p></div>`}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hdr"><h3>⬇️ Most Downloaded</h3></div>
+      <div class="anal-bars">${topD.length?topD.map((m,i)=>`
+        <div class="abar-row">
+          <span class="abar-rank">${i+1}</span>
+          <img class="abar-thumb" src="${m.thumbnail||""}" onerror="this.style.opacity='0.2'" alt=""/>
+          <div class="abar-info">
+            <div class="abar-title">${m.title}</div>
+            <div class="abar-track"><div class="abar-fill" style="width:${Math.round((m.downloads||0)/(topD[0]?.downloads||1)*100)}%;background:var(--cyan)"></div></div>
+          </div>
+          <span class="abar-val" style="color:var(--cyan)">${fmtB(m.downloads||0)}</span>
+        </div>`).join(""):`<div class="tbl-empty"><p>No download data yet</p></div>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   SETTINGS
+══════════════════════════════════════ */
+function renderSettings(){
+  return`
+  <div class="settings-grid">
+    <div class="card">
+      <div class="form-sec-title">⚙️ Platform</div>
+      <div class="fgroup" style="margin-bottom:14px"><label class="flabel">Site Name</label><input class="finput" value="PSIQX Movies"/></div>
+      <div class="fgroup" style="margin-bottom:14px"><label class="flabel">Tagline</label><input class="finput" value="Stream & Download HD Movies"/></div>
+      <div class="fgroup" style="margin-bottom:16px"><label class="flabel">Admin Email</label><input class="finput" value="${S.user?.email||''}"/></div>
+      <button class="btn-p" onclick="toast('Settings saved ✓','ok')">Save Settings</button>
+    </div>
+    <div class="card">
+      <div class="form-sec-title">🔐 Access Control</div>
+      <div class="sw-group">
+        <div class="sw-row"><span>Require login to watch</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Allow guest browsing</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Enable downloads</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Maintenance mode</span><label class="sw"><input type="checkbox"/><span class="sw-sl"></span></label></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="form-sec-title">🎨 Homepage Layout</div>
+      <div class="sw-group">
+        <div class="sw-row"><span>Show hero banner</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Show trending row</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Show continue watching</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+        <div class="sw-row"><span>Show category bars</span><label class="sw"><input type="checkbox" checked/><span class="sw-sl"></span></label></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="form-sec-title">📦 Firebase Connection</div>
+      <div style="font-size:12px;color:var(--t3);line-height:2;font-family:monospace">
+        <div>Project: <span style="color:var(--red)">psiqx-movie</span></div>
+        <div>Auth: <span style="color:var(--t2)">psiqx-movie.firebaseapp.com</span></div>
+        <div>Storage: <span style="color:var(--t2)">psiqx-movie.firebasestorage.app</span></div>
+        <div>Logged in: <span style="color:var(--green)">${S.user?.email||"—"}</span></div>
+      </div>
+      <div style="margin-top:14px;padding:12px;background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:var(--r);font-size:13px;color:var(--green)">
+        ✅ Firebase is connected and live.
+      </div>
+    </div>
+    <div class="card">
+      <div class="form-sec-title">📊 Quick Stats</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${[["🎬","Movies",S.stats.movies],["👥","Users",S.stats.users],["👁️","Views",fmtB(S.stats.views)],["⬇️","Downloads",fmtB(S.stats.downloads)]].map(([ic,l,v])=>`
+        <div style="background:var(--bg4);border-radius:var(--r);padding:14px;text-align:center">
+          <div style="font-size:22px;margin-bottom:4px">${ic}</div>
+          <div style="font-size:20px;font-weight:700;color:var(--red)">${v}</div>
+          <div style="font-size:11px;color:var(--t3);margin-top:2px">${l}</div>
+        </div>`).join("")}
+      </div>
+    </div>
+    <div class="card">
+      <div class="form-sec-title">🚪 Session</div>
+      <p style="color:var(--t3);font-size:14px;margin-bottom:16px">Logged in as <strong style="color:var(--text)">${S.user?.email||"—"}</strong></p>
+      <button class="btn-danger" onclick="doLogout()">Sign Out of Admin</button>
+    </div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════
+   CHARTS
+══════════════════════════════════════ */
+const CD={
+  responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:"#9090a8",font:{family:"Inter",size:12}}}},
+  scales:{
+    x:{ticks:{color:"#505068"},grid:{color:"rgba(255,255,255,0.04)"}},
+    y:{ticks:{color:"#505068"},grid:{color:"rgba(255,255,255,0.04)"}}
+  }
+};
+const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function buildMonthly(){
+  const views=new Array(12).fill(0),downloads=new Array(12).fill(0);
+  S.movies.forEach(m=>{
+    const ts=m.createdAt?.seconds?m.createdAt.seconds*1000:null;
+    const mo=ts?new Date(ts).getMonth():0;
+    views[mo]+=(m.views||0);
+    downloads[mo]+=(m.downloads||0);
+  });
+  return{views,downloads};
+}
+
+function buildUserGrowth(){
+  const byMo=new Array(12).fill(0);
+  S.users.forEach(u=>{
+    const ts=u.createdAt?.seconds?u.createdAt.seconds*1000:null;
+    if(ts)byMo[new Date(ts).getMonth()]++;
+  });
+  return byMo;
+}
+
+function initDashCharts(){
+  setTimeout(()=>{
+    const d=buildMonthly();
+    const ctx1=document.getElementById("mainChart");
+    if(ctx1){
+      if(S.charts.main)S.charts.main.destroy();
+      S.charts.main=new Chart(ctx1,{type:"line",data:{labels:MONTHS,datasets:[{
+        label:"Views",data:d.views,borderColor:"#e50914",backgroundColor:"rgba(229,9,20,0.07)",
+        tension:0.4,fill:true,pointBackgroundColor:"#e50914",pointRadius:3,pointHoverRadius:5
+      }]},options:{...CD,plugins:{...CD.plugins,legend:{display:false}}}});
+    }
+    const ctx2=document.getElementById("donutChart");
+    if(ctx2){
+      if(S.charts.donut)S.charts.donut.destroy();
+      const COLS=["#e50914","#00d4ff","#8b5cf6","#f59e0b","#22c55e","#f97316","#ff69b4","#06b6d4"];
+      const catNames=S.cats.length?S.cats.map(c=>c.name):[...new Set(S.movies.map(m=>m.category).filter(Boolean))];
+      const catCols=S.cats.length?S.cats.map((c,i)=>c.color||COLS[i%COLS.length]):catNames.map((_,i)=>COLS[i%COLS.length]);
+      const catCounts=catNames.map(n=>S.movies.filter(m=>m.category===n).length);
+      S.charts.donut=new Chart(ctx2,{type:"doughnut",data:{labels:catNames,datasets:[{
+        data:catCounts,backgroundColor:catCols,borderWidth:0,hoverOffset:4
+      }]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{color:"#9090a8",font:{size:11},boxWidth:10,padding:8}}}}});
+    }
+  },80);
+}
+
+window.swMainChart=(type,btn)=>{
+  document.querySelectorAll("#mainChartCard .ctab").forEach(t=>t.classList.remove("on"));
+  btn.classList.add("on");
+  if(!S.charts.main)return;
+  const d=buildMonthly();
+  const cols={views:["#e50914","rgba(229,9,20,0.07)"],downloads:["#00d4ff","rgba(0,212,255,0.07)"]};
+  const c=cols[type]||cols.views;
+  S.charts.main.data.datasets[0].data=d[type]||d.views;
+  S.charts.main.data.datasets[0].borderColor=c[0];
+  S.charts.main.data.datasets[0].backgroundColor=c[1];
+  S.charts.main.data.datasets[0].pointBackgroundColor=c[0];
+  S.charts.main.data.datasets[0].label=type.charAt(0).toUpperCase()+type.slice(1);
+  S.charts.main.update();
+};
+
+function initAnalyticsCharts(){
+  setTimeout(()=>{
+    const d=buildMonthly();
+    const COLS=["#e50914","#00d4ff","#8b5cf6","#f59e0b","#22c55e","#f97316","#ff69b4","#06b6d4"];
+    const catNames=S.cats.length?S.cats.map(c=>c.name):[...new Set(S.movies.map(m=>m.category).filter(Boolean))];
+    const catCols=S.cats.length?S.cats.map((c,i)=>c.color||COLS[i%COLS.length]):catNames.map((_,i)=>COLS[i%COLS.length]);
+    const catCounts=catNames.map(n=>S.movies.filter(m=>m.category===n).length);
+
+    const ctx1=document.getElementById("aLineChart");
+    if(ctx1){
+      if(S.charts.aLine)S.charts.aLine.destroy();
+      S.charts.aLine=new Chart(ctx1,{type:"line",data:{labels:MONTHS,datasets:[
+        {label:"Views",data:d.views,borderColor:"#e50914",backgroundColor:"rgba(229,9,20,0.06)",tension:0.4,fill:true},
+        {label:"Downloads",data:d.downloads,borderColor:"#00d4ff",backgroundColor:"rgba(0,212,255,0.06)",tension:0.4,fill:true}
+      ]},options:CD});
+    }
+    const ctx2=document.getElementById("aBarChart");
+    if(ctx2){
+      if(S.charts.aBar)S.charts.aBar.destroy();
+      S.charts.aBar=new Chart(ctx2,{type:"bar",data:{labels:catNames,datasets:[{
+        label:"Movies",data:catCounts,backgroundColor:catCols.map(c=>c+"cc"),borderRadius:5
+      }]},options:{...CD,plugins:{...CD.plugins,legend:{display:false}}}});
+    }
+    const ctx3=document.getElementById("aUserChart");
+    if(ctx3){
+      if(S.charts.aUser)S.charts.aUser.destroy();
+      S.charts.aUser=new Chart(ctx3,{type:"bar",data:{labels:MONTHS,datasets:[{
+        label:"New Users",data:buildUserGrowth(),backgroundColor:"rgba(34,197,94,0.5)",borderRadius:4
+      }]},options:{...CD,plugins:{...CD.plugins,legend:{display:false}}}});
+    }
+  },80);
+}
+
+window.swALine=(type,btn)=>{
+  document.querySelectorAll("#aLineCard .ctab").forEach(t=>t.classList.remove("on"));
+  btn.classList.add("on");
+  if(!S.charts.aLine)return;
+  const d=buildMonthly();
+  if(type==="all"){
+    S.charts.aLine.data.datasets=[
+      {label:"Views",data:d.views,borderColor:"#e50914",backgroundColor:"rgba(229,9,20,0.06)",tension:0.4,fill:true},
+      {label:"Downloads",data:d.downloads,borderColor:"#00d4ff",backgroundColor:"rgba(0,212,255,0.06)",tension:0.4,fill:true}
+    ];
+  }else if(type==="views"){
+    S.charts.aLine.data.datasets=[{label:"Views",data:d.views,borderColor:"#e50914",backgroundColor:"rgba(229,9,20,0.06)",tension:0.4,fill:true}];
+  }else{
+    S.charts.aLine.data.datasets=[{label:"Downloads",data:d.downloads,borderColor:"#00d4ff",backgroundColor:"rgba(0,212,255,0.06)",tension:0.4,fill:true}];
+  }
+  S.charts.aLine.update();
+};
+
+/* ── CONFIRM MODAL ── */
+window.showConfirm=(msg,cb)=>{
+  document.getElementById("confirmMsg").innerHTML=msg;
+  document.getElementById("confirmModal").classList.add("on");
+  document.getElementById("confirmYes").onclick=()=>{cb();closeConfirm();};
+};
+window.closeConfirm=()=>document.getElementById("confirmModal").classList.remove("on");
+
+/* ── NOTIF TOGGLE (placeholder) ── */
+window.toggleNotif=()=>toast("No new notifications","");
+
+/* ── HELPERS ── */
+function esc(s){return(s||"").replace(/'/g,"&#39;").replace(/"/g,"&quot;");}
+
+/* ── EXPOSE GLOBALS ── */
+window.S=S;
+window.updateDoc=updateDoc;
+window.deleteDoc=deleteDoc;
+window.addDoc=addDoc;
+window.doc=doc;
+window.db=db;
+window.collection=collection;
+window.serverTimestamp=serverTimestamp;
+</script>
+</body>
+</html>
