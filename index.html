@@ -173,7 +173,7 @@ section.row{padding:72px 0}
 
 /* LOADING / SKELETON */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
-.loading-overlay.hidden{display:none}
+.loading-overlay.hidden{display:none!important}
 .spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .skeleton{background:linear-gradient(90deg,var(--surface) 25%,rgba(51,51,63,.6) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:12px}
@@ -203,6 +203,13 @@ footer ul li:hover{color:var(--fg)}
 <body>
 
 <!-- LOADING -->
+<script>
+// Module script লোড না হলেও ৫ সেকেন্ড পরে loading সরাবে
+window._safeHide = setTimeout(function(){
+  var el = document.getElementById('loadingOverlay');
+  if(el) el.style.display='none';
+}, 5000);
+</script>
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <p style="color:var(--muted);font-size:14px">লোড হচ্ছে...</p>
@@ -517,19 +524,26 @@ if (IS_CONFIGURED) {
     renderNavAuth(user);
   });
 
-  // Safety timeout — 8 সেকেন্ডের মধ্যে লোড না হলে loading সরিয়ে দেবে
+  // Safety timeout — 5 সেকেন্ডের মধ্যে লোড না হলে loading সরিয়ে দেবে
   const safetyTimer = setTimeout(() => {
-    hide('loadingOverlay');
-  }, 8000);
+    const el = document.getElementById('loadingOverlay');
+    if(el){ el.style.display='none'; }
+  }, 5000);
 
   loadMovies().then(() => {
     clearTimeout(safetyTimer);
     hide('loadingOverlay');
   }).catch(err => {
     clearTimeout(safetyTimer);
-    console.error(err);
-    hide('loadingOverlay');
-    showToast('মুভি লোড করতে সমস্যা হয়েছে', 'error');
+    console.error('Firebase error:', err);
+    const el = document.getElementById('loadingOverlay');
+    if(el) el.style.display='none';
+    // Screen-এ error দেখাও
+    const notice = document.createElement('div');
+    notice.style.cssText='position:fixed;bottom:20px;left:20px;right:20px;background:#e63946;color:#fff;padding:16px;border-radius:12px;font-size:14px;z-index:999;';
+    notice.textContent = 'লোড সমস্যা: ' + (err.message || err.code || err);
+    document.body.appendChild(notice);
+    setTimeout(()=>notice.remove(), 10000);
   });
 } else {
   // Show config warning
@@ -849,7 +863,7 @@ function showToast(msg, type = 'success') {
 window.showToast = showToast;
 
 // ── HELPERS ──
-function hide(id) { document.getElementById(id)?.classList.add('hidden'); }
+function hide(id) { const el = document.getElementById(id); if(el){ el.classList.add('hidden'); el.style.display='none'; } }
 function esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
