@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Cinemax BD — বাংলা ও আন্তর্জাতিক মুভি ডাউনলোড</title>
-<meta name="description" content="সেরা মানের বাংলা ও আন্তর্জাতিক মুভি HD, 4K কোয়ালিটিতে ডাউনলোড করুন।"/>
+<meta name="description" content="সেরা মানের বাংলা ও আন্তর্জাতিক মুভি HD, 4K কোয়ালিটিতে ডাউনলোড করুন।" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -18,41 +18,40 @@ img{display:block;max-width:100%}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,select,textarea{font-family:var(--font-bn)}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
-
-/* NAV */
 nav{position:sticky;top:0;z-index:50;background:rgba(26,26,34,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 nav .container{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{font-family:var(--font-en);font-weight:900;font-size:24px;letter-spacing:-.04em;color:var(--primary);text-transform:uppercase;cursor:pointer}
 .nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
 .nav-links a{color:var(--muted);transition:color .2s;cursor:pointer}
 .nav-links a:hover,.nav-links a.active{color:var(--fg)}
-.nav-right{display:flex;align-items:center;gap:12px}
 .search-wrap{position:relative}
-.search{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:9px 18px 9px 38px;color:var(--fg);font-size:14px;width:220px;outline:none}
+.search{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:9px 18px 9px 38px;color:var(--fg);font-family:var(--font-bn);font-size:14px;width:220px;outline:none}
 .search:focus{border-color:var(--primary)}
 .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
 .search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;z-index:100;display:none;box-shadow:0 20px 40px rgba(0,0,0,.4)}
 .search-dropdown.open{display:block}
-.sr-item{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .15s}
-.sr-item:hover{background:var(--border)}
-.sr-item img{width:36px;height:54px;object-fit:cover;border-radius:6px;background:var(--border)}
-.sr-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sr-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.search-result-item{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .15s}
+.search-result-item:hover{background:var(--border)}
+.search-result-item img{width:36px;height:54px;object-fit:cover;border-radius:6px}
+.search-result-item .sr-info{flex:1;min-width:0}
+.search-result-item .sr-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result-item .sr-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.nav-right{display:flex;align-items:center;gap:12px}
 .login-btn{background:var(--primary);color:var(--primary-fg);padding:9px 22px;border-radius:999px;font-weight:700;font-size:14px;transition:filter .2s;cursor:pointer}
 .login-btn:hover{filter:brightness(1.1)}
-.user-avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;cursor:pointer;border:2px solid transparent;transition:border-color .2s;position:relative}
-.user-avatar:hover{border-color:rgba(255,255,255,.4)}
+.user-menu{position:relative}
+.user-avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.user-avatar:hover{border-color:var(--primary)}
 .user-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;min-width:180px;overflow:hidden;z-index:100;display:none;box-shadow:0 20px 40px rgba(0,0,0,.4)}
 .user-dropdown.open{display:block}
-.user-dropdown div{padding:12px 18px;font-size:14px;color:var(--muted);transition:all .15s;cursor:pointer}
-.user-dropdown div:hover{background:var(--border);color:var(--fg)}
-.user-dropdown .divider{height:1px;background:var(--border);margin:4px 0;padding:0;cursor:default}
-.user-dropdown .divider:hover{background:var(--border)}
-@media(max-width:820px){.nav-links,.search-wrap{display:none}}
+.user-dropdown a{display:block;padding:12px 18px;font-size:14px;color:var(--muted);transition:all .15s;cursor:pointer}
+.user-dropdown a:hover{background:var(--border);color:var(--fg)}
+.user-dropdown .divider{height:1px;background:var(--border);margin:4px 0}
+@media (max-width:820px){.nav-links,.search-wrap{display:none}}
 
 /* PAGES */
 .page{display:none}
-.page.active{display:block;animation:fadeIn .35s ease}
+.page.active{display:block;animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes reveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
@@ -79,13 +78,13 @@ section.row{padding:72px 0}
 .row-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;gap:16px;flex-wrap:wrap}
 .row-head h2{font-size:clamp(24px,3.5vw,38px);font-weight:700;margin-bottom:6px}
 .row-head p{color:var(--muted)}
-.see-all{color:var(--primary);font-size:14px;font-weight:700;border-bottom:2px solid rgba(230,57,70,.25);padding-bottom:3px;transition:border-color .2s;cursor:pointer}
-.see-all:hover{border-color:var(--primary)}
+.row-head .see-all{color:var(--primary);font-size:14px;font-weight:700;border-bottom:2px solid rgba(230,57,70,.25);padding-bottom:3px;transition:border-color .2s;cursor:pointer}
+.row-head .see-all:hover{border-color:var(--primary)}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:28px}
-@media(max-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:22px}}
-@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+@media (max-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:22px}}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:18px}}
 .card{display:block;animation:reveal .6s ease both;cursor:pointer}
 .poster{position:relative;aspect-ratio:2/3;border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 0 0 1px rgba(255,255,255,.04);transition:transform .3s,box-shadow .3s;background:var(--surface)}
 .poster img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
@@ -96,32 +95,32 @@ section.row{padding:72px 0}
 .card:hover h3{color:var(--primary)}
 .meta-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-family:var(--font-mono);gap:8px}
 
-/* GENRE */
+/* GENRE STRIP */
 .genre-strip{background:rgba(34,34,44,.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0}
 .genre-strip h2{font-size:clamp(22px,3vw,30px);font-weight:700;margin-bottom:24px}
 .genre-pills{display:flex;flex-wrap:wrap;gap:10px}
 .pill{padding:11px 20px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:14px;font-weight:500;transition:all .2s;cursor:pointer}
 .pill:hover,.pill.active{border-color:var(--primary);color:var(--primary);background:rgba(230,57,70,.08)}
 
-/* DETAIL */
+/* DETAIL PAGE */
 .detail-page{position:relative;min-height:100vh;padding-top:50px;padding-bottom:80px}
 .detail-bg{position:absolute;inset:0;height:60vh;background-size:cover;background-position:center;opacity:.25;filter:blur(4px)}
 .detail-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent,var(--bg) 90%)}
 .detail-grid{position:relative;display:grid;grid-template-columns:320px 1fr;gap:50px;align-items:start;padding-top:30px}
-@media(max-width:900px){.detail-grid{grid-template-columns:1fr;gap:32px}}
+@media (max-width:900px){.detail-grid{grid-template-columns:1fr;gap:32px}}
 .detail-poster{border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(230,57,70,.15);max-width:340px}
-.detail-poster img{width:100%;aspect-ratio:2/3;object-fit:cover;background:var(--surface)}
+.detail-poster img{width:100%;aspect-ratio:2/3;object-fit:cover}
 .detail-info .badges{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
 .detail-info h1{font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.02em}
 .meta-list{display:flex;flex-wrap:wrap;gap:18px;color:var(--muted);font-size:14px;margin-bottom:24px}
 .synopsis{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:28px;max-width:640px}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px;font-size:14px}
-@media(max-width:600px){.info-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.info-grid{grid-template-columns:1fr}}
 .info-grid dt{font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:4px}
 .info-grid dd{font-weight:500}
-.dl-section-title{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:14px}
+.dl-title{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:14px}
 .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
-@media(max-width:600px){.dl-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.dl-grid{grid-template-columns:1fr}}
 .dl-card{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:16px;transition:border-color .2s}
 .dl-card:hover{border-color:rgba(230,57,70,.4)}
 .dl-card.recommended{border-color:rgba(230,57,70,.5);box-shadow:0 0 0 1px rgba(230,57,70,.2)}
@@ -130,19 +129,24 @@ section.row{padding:72px 0}
 .dl-lbl{font-size:10px;font-family:var(--font-mono);color:var(--muted)}
 .dl-lbl.primary{color:var(--primary)}
 .dl-card p{font-size:12px;color:var(--muted);margin-bottom:14px}
-.dl-btn{width:100%;padding:10px;border-radius:10px;background:rgba(230,57,70,.1);color:var(--primary);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
-.dl-btn:hover{background:var(--primary);color:var(--primary-fg)}
+.dl-btn{width:100%;padding:10px;border-radius:10px;background:rgba(230,57,70,.1);color:var(--primary);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none}
+.dl-btn:hover,.dl-btn.primary:hover{background:var(--primary);color:var(--primary-fg)}
 .dl-btn.primary{background:var(--primary);color:var(--primary-fg);box-shadow:0 8px 24px -8px rgba(230,57,70,.4)}
 .note{font-size:12px;color:var(--muted);margin-top:8px}
-.back-link{display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:var(--primary);font-weight:700;font-size:14px;cursor:pointer}
+.back-link{display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:var(--primary);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .2s}
 .back-link:hover{opacity:.75}
 
-/* MOVIES PAGE */
-.movies-page{padding:60px 0}
-.filter-bar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;align-items:center}
-.filter-select{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:10px 16px;border-radius:10px;font-size:14px;outline:none;cursor:pointer;-webkit-appearance:none}
-.filter-select:focus{border-color:var(--primary)}
-.movies-count{font-size:14px;color:var(--muted);font-family:var(--font-mono);margin-left:auto}
+/* FOOTER */
+footer{border-top:1px solid var(--border);margin-top:40px;padding:50px 0;background:rgba(34,34,44,.2)}
+footer .container{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}
+@media (max-width:700px){footer .container{grid-template-columns:1fr;gap:28px}}
+footer .brand{display:block;margin-bottom:14px}
+footer p{color:var(--muted);font-size:14px;line-height:1.7;max-width:380px}
+footer h4{font-size:14px;font-weight:700;margin-bottom:16px}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted)}
+footer ul li{cursor:pointer;transition:color .2s}
+footer ul li:hover{color:var(--fg)}
+.copyright{text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:40px;color:var(--muted);font-size:13px}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
@@ -155,9 +159,9 @@ section.row{padding:72px 0}
 .modal .sub{font-size:14px;color:var(--muted);margin-bottom:28px}
 .form-group{margin-bottom:18px}
 .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--muted)}
-.form-group input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--fg);font-size:15px;outline:none;transition:border-color .2s;font-family:var(--font-bn)}
+.form-group input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--fg);font-size:15px;outline:none;transition:border-color .2s}
 .form-group input:focus{border-color:var(--primary)}
-.form-submit{width:100%;padding:14px;background:var(--primary);color:var(--primary-fg);border-radius:12px;font-weight:700;font-size:15px;transition:filter .2s;margin-top:6px;cursor:pointer;border:none;font-family:var(--font-bn)}
+.form-submit{width:100%;padding:14px;background:var(--primary);color:var(--primary-fg);border-radius:12px;font-weight:700;font-size:15px;transition:filter .2s;margin-top:6px}
 .form-submit:hover{filter:brightness(1.1)}
 .form-toggle{text-align:center;margin-top:18px;font-size:14px;color:var(--muted)}
 .form-toggle span{color:var(--primary);font-weight:700;cursor:pointer}
@@ -171,45 +175,36 @@ section.row{padding:72px 0}
 .toast.success{border-color:rgba(34,197,94,.4);color:#4ade80}
 .toast.error{border-color:rgba(230,57,70,.4);color:#ff6b75}
 
-/* LOADING / SKELETON */
+/* LOADING */
 .loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
-.loading-overlay.hidden{display:none!important}
+.loading-overlay.hidden{display:none}
 .spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .skeleton{background:linear-gradient(90deg,var(--surface) 25%,rgba(51,51,63,.6) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:12px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .skeleton-poster{aspect-ratio:2/3;border-radius:16px}
-.empty-state{text-align:center;padding:80px 20px;color:var(--muted);grid-column:1/-1}
+.skeleton-line{height:14px;margin-bottom:8px;border-radius:4px}
+.skeleton-line.short{width:60%}
+.empty-state{text-align:center;padding:80px 20px;color:var(--muted)}
 .empty-state .icon{font-size:48px;margin-bottom:16px}
 .empty-state h3{font-size:22px;font-weight:700;color:var(--fg);margin-bottom:8px}
 
-/* CONFIG NOTICE */
-.config-notice{background:rgba(255,200,0,.07);border:1px solid rgba(255,200,0,.25);border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;color:#ffd86b;display:flex;align-items:flex-start;gap:10px;line-height:1.7}
-.config-notice code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px}
+/* MOVIES PAGE */
+.movies-page{padding:60px 0}
+.movies-page .filter-bar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;align-items:center}
+.filter-select{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:10px 16px;border-radius:10px;font-size:14px;outline:none;cursor:pointer}
+.filter-select:focus{border-color:var(--primary)}
+.movies-count{font-size:14px;color:var(--muted);font-family:var(--font-mono);margin-left:auto}
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);margin-top:40px;padding:50px 0;background:rgba(34,34,44,.2)}
-footer .container{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}
-@media(max-width:700px){footer .container{grid-template-columns:1fr;gap:28px}}
-footer .brand{display:block;margin-bottom:14px}
-footer p{color:var(--muted);font-size:14px;line-height:1.7;max-width:380px}
-footer h4{font-size:14px;font-weight:700;margin-bottom:16px}
-footer ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted)}
-footer ul li{cursor:pointer;transition:color .2s}
-footer ul li:hover{color:var(--fg)}
-.copyright{text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:40px;color:var(--muted);font-size:13px}
+/* CONFIG NOTICE */
+.config-notice{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.3);border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;color:#ff9aa0;display:flex;align-items:flex-start;gap:10px}
+.config-notice .icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.config-notice code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px}
 </style>
 </head>
 <body>
 
 <!-- LOADING -->
-<script>
-// Module script লোড না হলেও ৫ সেকেন্ড পরে loading সরাবে
-window._safeHide = setTimeout(function(){
-  var el = document.getElementById('loadingOverlay');
-  if(el) el.style.display='none';
-}, 5000);
-</script>
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <p style="color:var(--muted);font-size:14px">লোড হচ্ছে...</p>
@@ -219,43 +214,41 @@ window._safeHide = setTimeout(function(){
 <div class="toast" id="toast"></div>
 
 <!-- AUTH MODAL -->
-<div class="modal-overlay" id="authModal" onclick="handleModalClick(event)">
+<div class="modal-overlay" id="authModal">
   <div class="modal">
     <button class="modal-close" onclick="closeAuthModal()">✕</button>
-    <!-- Login -->
     <div id="loginForm">
       <h2>স্বাগতম</h2>
       <p class="sub">আপনার অ্যাকাউন্টে লগইন করুন</p>
       <div class="form-error" id="loginError"></div>
       <div class="form-group">
         <label>ইমেইল</label>
-        <input type="email" id="loginEmail" placeholder="আপনার ইমেইল" onkeydown="if(event.key==='Enter')handleLogin()"/>
+        <input type="email" id="loginEmail" placeholder="আপনার ইমেইল" />
       </div>
       <div class="form-group">
         <label>পাসওয়ার্ড</label>
-        <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড" onkeydown="if(event.key==='Enter')handleLogin()"/>
+        <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড" />
       </div>
-      <button class="form-submit" id="loginSubmit" onclick="handleLogin()">লগইন করুন</button>
+      <button class="form-submit" onclick="handleLogin()">লগইন করুন</button>
       <p class="form-toggle">নতুন ব্যবহারকারী? <span onclick="switchToRegister()">রেজিস্ট্রেশন করুন</span></p>
     </div>
-    <!-- Register -->
     <div id="registerForm" style="display:none">
       <h2>নতুন অ্যাকাউন্ট</h2>
       <p class="sub">বিনামূল্যে রেজিস্ট্রেশন করুন</p>
       <div class="form-error" id="registerError"></div>
       <div class="form-group">
         <label>নাম</label>
-        <input type="text" id="regName" placeholder="আপনার নাম"/>
+        <input type="text" id="regName" placeholder="আপনার নাম" />
       </div>
       <div class="form-group">
         <label>ইমেইল</label>
-        <input type="email" id="regEmail" placeholder="আপনার ইমেইল"/>
+        <input type="email" id="regEmail" placeholder="আপনার ইমেইল" />
       </div>
       <div class="form-group">
         <label>পাসওয়ার্ড</label>
-        <input type="password" id="regPassword" placeholder="কমপক্ষে ৬ অক্ষর" onkeydown="if(event.key==='Enter')handleRegister()"/>
+        <input type="password" id="regPassword" placeholder="কমপক্ষে ৬ অক্ষর" />
       </div>
-      <button class="form-submit" id="regSubmit" onclick="handleRegister()">রেজিস্ট্রেশন করুন</button>
+      <button class="form-submit" onclick="handleRegister()">রেজিস্ট্রেশন করুন</button>
       <p class="form-toggle">অ্যাকাউন্ট আছে? <span onclick="switchToLogin()">লগইন করুন</span></p>
     </div>
   </div>
@@ -264,19 +257,16 @@ window._safeHide = setTimeout(function(){
 <!-- NAV -->
 <nav>
   <div class="container">
-    <span class="brand" onclick="goPage('home')">Cinemax BD</span>
+    <span class="brand" onclick="goHome()">Cinemax BD</span>
     <div class="nav-links">
-      <a id="navHome" class="active" onclick="goPage('home')">হোম</a>
-      <a id="navMovies" onclick="goPage('movies')">সকল মুভি</a>
-      <a id="navGenres" onclick="goPage('genres')">জেনার</a>
+      <a onclick="goHome()" id="nav-home" class="active">হোম</a>
+      <a onclick="goMovies()">সকল মুভি</a>
+      <a onclick="goGenres()">জেনার</a>
     </div>
     <div class="nav-right">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search" id="searchInput" placeholder="মুভি খুঁজুন..."
-          oninput="handleSearch(this.value)"
-          onfocus="handleSearch(this.value)"
-          onblur="setTimeout(closeSearch,200)"/>
+        <input class="search" id="searchInput" placeholder="মুভি খুঁজুন..." oninput="handleSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)" onfocus="handleSearch(this.value)" />
         <div class="search-dropdown" id="searchDropdown"></div>
       </div>
       <div id="navAuthArea">
@@ -286,35 +276,40 @@ window._safeHide = setTimeout(function(){
   </div>
 </nav>
 
+<!-- MAIN -->
 <main>
-<!-- HOME -->
+
+<!-- HOME PAGE -->
 <div class="page active" id="page-home">
-  <div class="hero" id="heroSection">
-    <div class="hero-bg"><img id="heroBgImg" src="" alt=""/></div>
-    <div class="container hero-content">
-      <div class="tags">
-        <span class="badge-primary" id="heroGenre">লোড হচ্ছে</span>
-        <span class="rating" id="heroRating"></span>
-        <span class="rating" id="heroYear" style="color:var(--muted)"></span>
-      </div>
-      <h1 id="heroTitle">মুভি লোড হচ্ছে...</h1>
-      <p id="heroSynopsis"></p>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="heroBtn">▶ বিস্তারিত দেখুন</button>
-        <button class="btn btn-ghost" onclick="goPage('movies')">📋 সকল মুভি</button>
+  <div id="heroSection">
+    <div class="hero">
+      <div class="hero-bg"><img src="" id="heroBgImg" alt=""/></div>
+      <div class="container hero-content">
+        <div class="tags">
+          <span class="badge-primary" id="heroGenre">লোড হচ্ছে</span>
+          <span class="rating" id="heroRating"></span>
+        </div>
+        <h1 id="heroTitle">মুভি লোড হচ্ছে...</h1>
+        <p id="heroSynopsis"></p>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="heroWatchBtn" onclick="">▶ বিস্তারিত দেখুন</button>
+          <button class="btn btn-ghost" onclick="goMovies()">📋 সকল মুভি</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <section class="row">
+  <section class="row" id="latestRow">
     <div class="container">
       <div class="row-head">
         <div><h2>সর্বশেষ মুভি</h2><p>নতুন যোগ হওয়া মুভি</p></div>
-        <a class="see-all" onclick="goPage('movies')">সব দেখুন →</a>
+        <a class="see-all" onclick="goMovies()">সব দেখুন →</a>
       </div>
       <div class="grid" id="latestGrid">
-        <div class="skeleton skeleton-poster"></div><div class="skeleton skeleton-poster"></div>
-        <div class="skeleton skeleton-poster"></div><div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
         <div class="skeleton skeleton-poster"></div>
       </div>
     </div>
@@ -323,26 +318,28 @@ window._safeHide = setTimeout(function(){
   <section class="genre-strip">
     <div class="container">
       <h2>জেনার অনুসারে দেখুন</h2>
-      <div class="genre-pills" id="genrePillsHome"></div>
+      <div class="genre-pills" id="genrePills"></div>
     </div>
   </section>
 
-  <section class="row">
+  <section class="row" id="trendingRow">
     <div class="container">
       <div class="row-head">
-        <div><h2>সর্বাধিক দেখা</h2><p>সবচেয়ে জনপ্রিয় মুভি</p></div>
-        <a class="see-all" onclick="goPage('movies')">সব দেখুন →</a>
+        <div><h2>ট্রেন্ডিং</h2><p>সবচেয়ে বেশি দেখা মুভি</p></div>
+        <a class="see-all" onclick="goMovies()">সব দেখুন →</a>
       </div>
       <div class="grid" id="trendingGrid">
-        <div class="skeleton skeleton-poster"></div><div class="skeleton skeleton-poster"></div>
-        <div class="skeleton skeleton-poster"></div><div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
         <div class="skeleton skeleton-poster"></div>
       </div>
     </div>
   </section>
 </div>
 
-<!-- ALL MOVIES -->
+<!-- ALL MOVIES PAGE -->
 <div class="page" id="page-movies">
   <div class="movies-page">
     <div class="container">
@@ -350,20 +347,18 @@ window._safeHide = setTimeout(function(){
         <div><h2>সকল মুভি</h2><p>সম্পূর্ণ কালেকশন</p></div>
       </div>
       <div class="filter-bar">
-        <select class="filter-select" id="genreFilter" onchange="applyFilters()">
+        <select class="filter-select" id="genreFilter" onchange="filterMovies()">
           <option value="">সকল জেনার</option>
         </select>
-        <select class="filter-select" id="yearFilter" onchange="applyFilters()">
+        <select class="filter-select" id="yearFilter" onchange="filterMovies()">
           <option value="">সকল বছর</option>
         </select>
-        <select class="filter-select" id="qualityFilter" onchange="applyFilters()">
+        <select class="filter-select" id="qualityFilter" onchange="filterMovies()">
           <option value="">সকল কোয়ালিটি</option>
-          <option>4K</option><option>1080p</option><option>720p</option><option>480p</option>
-        </select>
-        <select class="filter-select" id="sortFilter" onchange="applyFilters()">
-          <option value="newest">নতুন আগে</option>
-          <option value="rating">রেটিং</option>
-          <option value="views">জনপ্রিয়</option>
+          <option value="4K">4K</option>
+          <option value="1080p">1080p</option>
+          <option value="720p">720p</option>
+          <option value="480p">480p</option>
         </select>
         <span class="movies-count" id="moviesCount"></span>
       </div>
@@ -372,24 +367,28 @@ window._safeHide = setTimeout(function(){
   </div>
 </div>
 
-<!-- GENRES -->
+<!-- GENRES PAGE -->
 <div class="page" id="page-genres">
   <div class="movies-page">
     <div class="container">
-      <div class="row-head"><div><h2>জেনার</h2><p>পছন্দের ধরন বেছে নিন</p></div></div>
+      <div class="row-head">
+        <div><h2>জেনার</h2><p>পছন্দের ধরন বেছে নিন</p></div>
+      </div>
       <div class="genre-pills" id="genrePillsPage" style="margin-bottom:40px"></div>
-      <div class="grid" id="genreMoviesGrid"><div class="empty-state"><div class="icon">🎬</div><h3>জেনার বেছে নিন</h3></div></div>
+      <div class="grid" id="genreMoviesGrid"></div>
     </div>
   </div>
 </div>
 
-<!-- DETAIL -->
+<!-- MOVIE DETAIL PAGE -->
 <div class="page" id="page-detail">
   <section class="detail-page">
     <div class="detail-bg" id="detailBg"></div>
     <div class="container">
       <div class="detail-grid">
-        <div class="detail-poster"><img id="detailPoster" src="" alt=""/></div>
+        <div class="detail-poster">
+          <img id="detailPoster" src="" alt="" />
+        </div>
         <div class="detail-info">
           <div class="badges">
             <span class="badge-primary" id="detailSource">WEB-DL</span>
@@ -399,29 +398,30 @@ window._safeHide = setTimeout(function(){
           <div class="meta-list" id="detailMeta"></div>
           <p class="synopsis" id="detailSynopsis"></p>
           <dl class="info-grid" id="detailInfoGrid"></dl>
-          <h4 class="dl-section-title">ডাউনলোড লিঙ্কস</h4>
+          <h4 class="dl-title">ডাউনলোড লিঙ্কস</h4>
           <div class="dl-grid" id="detailDlGrid"></div>
           <p class="note">* ডাউনলোডের আগে নিশ্চিত করুন আপনার দেশের কপিরাইট আইন অনুযায়ী এটি বৈধ।</p>
-          <span class="back-link" onclick="goBack()">← পিছনে যান</span>
+          <a class="back-link" onclick="history.back()">← পিছনে যান</a>
         </div>
       </div>
     </div>
   </section>
 </div>
+
 </main>
 
 <footer>
   <div class="container">
     <div>
       <span class="brand" style="display:block;margin-bottom:14px">Cinemax BD</span>
-      <p>সেরা মানের বাংলা ও আন্তর্জাতিক মুভি ডাউনলোডের নির্ভরযোগ্য প্ল্যাটফর্ম। আমরা শুধু লিঙ্ক শেয়ার করি, কোনো ফাইল হোস্ট করি না।</p>
+      <p>সেরা মানের বাংলা ও আন্তর্জাতিক মুভি দেখার নির্ভরযোগ্য প্ল্যাটফর্ম। আমরা শুধু লিঙ্ক শেয়ার করি, কোনো ফাইল হোস্ট করি না।</p>
     </div>
     <div>
       <h4>দ্রুত লিঙ্ক</h4>
       <ul>
-        <li onclick="goPage('home')">হোম</li>
-        <li onclick="goPage('movies')">সকল মুভি</li>
-        <li onclick="goPage('genres')">জেনার</li>
+        <li onclick="goHome()">হোম</li>
+        <li onclick="goMovies()">সকল মুভি</li>
+        <li onclick="goGenres()">জেনার</li>
       </ul>
     </div>
     <div>
@@ -436,437 +436,246 @@ window._safeHide = setTimeout(function(){
   <div class="copyright">© ২০২৪ Cinemax BD — সকল স্বত্ব সংরক্ষিত</div>
 </footer>
 
-<!-- Firebase -->
+<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-  signOut, onAuthStateChanged, updateProfile
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  getFirestore, collection, getDocs, doc, query,
-  orderBy, where, updateDoc, increment
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, getDoc, doc, query, orderBy, limit, where, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // ============================================================
-// 🔥 FIREBASE CONFIG — psiqx-movie
+// 🔥 FIREBASE CONFIG — নিচে আপনার Firebase config বসান
+// Firebase Console → Project Settings → Your apps → SDK setup
 // ============================================================
 const firebaseConfig = {
-  apiKey:            "AIzaSyDmma0fnGeItKRr7gBVojEkEIJNjhPGKwc",
-  authDomain:        "psiqx-movie.firebaseapp.com",
-  projectId:         "psiqx-movie",
-  storageBucket:     "psiqx-movie.firebasestorage.app",
-  messagingSenderId: "950855552839",
-  appId:             "1:950855552839:web:04ccf84ed28b0443df0662",
-  measurementId:     "G-S5RB3CFYVX"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 // ============================================================
 
-// ── Firestore movies collection structure (for reference) ──
-// {
-//   title: "মুভির নাম",
-//   posterUrl: "https://...",        // Firebase Storage বা direct URL
-//   synopsis: "সংক্ষিপ্ত বর্ণনা",
-//   year: 2024,
-//   duration: "২ ঘণ্টা ১৫ মিনিট",
-//   rating: "8.4",
-//   genres: ["অ্যাকশন", "ড্রামা"],
-//   director: "পরিচালকের নাম",
-//   cast: "অভিনেতা, অভিনেত্রী",
-//   language: "বাংলা",
-//   country: "বাংলাদেশ",
-//   source: "WEB-DL",               // WEB-DL / BluRay / HDTS
-//   featured: true,                  // Hero section-এ দেখাতে
-//   views: 0,
-//   createdAt: Timestamp,
-//   downloadLinks: [
-//     { quality: "480p", size: "450 MB", url: "https://drive.google.com/...", recommended: false },
-//     { quality: "720p", size: "900 MB", url: "https://drive.google.com/...", recommended: true },
-//     { quality: "1080p", size: "2.1 GB", url: "https://drive.google.com/...", recommended: false }
-//   ]
-// }
-
-const IS_CONFIGURED = firebaseConfig.apiKey !== "YOUR_API_KEY";
+const CONFIG_SET = firebaseConfig.apiKey !== "YOUR_API_KEY";
 
 let app, auth, db;
 let allMovies = [];
 let currentUser = null;
-let pageHistory = ['home'];
 
-// Global references
-window.goPage       = goPage;
-window.goBack       = goBack;
-window.goHome       = () => goPage('home');
-window.goMovies     = () => goPage('movies');
-window.goGenres     = () => goPage('genres');
-window.openDetail   = openDetail;
-window.handleSearch = handleSearch;
-window.closeSearch  = closeSearch;
-window.applyFilters = applyFilters;
-window.filterByGenre= filterByGenre;
-window.openAuthModal  = openAuthModal;
-window.closeAuthModal = closeAuthModal;
-window.handleModalClick = handleModalClick;
-window.handleLogin    = handleLogin;
-window.handleRegister = handleRegister;
-window.switchToLogin  = switchToLogin;
-window.switchToRegister = switchToRegister;
-window.handleLogout   = handleLogout;
-
-// ── BOOT ──
-if (IS_CONFIGURED) {
-  app  = initializeApp(firebaseConfig);
+if (CONFIG_SET) {
+  app = initializeApp(firebaseConfig);
   auth = getAuth(app);
-  db   = getFirestore(app);
-
-  onAuthStateChanged(auth, user => {
-    currentUser = user;
-    renderNavAuth(user);
-  });
-
-  // Safety timeout — 5 সেকেন্ডের মধ্যে লোড না হলে loading সরিয়ে দেবে
-  const safetyTimer = setTimeout(() => {
-    const el = document.getElementById('loadingOverlay');
-    if(el){ el.style.display='none'; }
-  }, 5000);
-
-  loadMovies().then(() => {
-    clearTimeout(safetyTimer);
-    hide('loadingOverlay');
-  }).catch(err => {
-    clearTimeout(safetyTimer);
-    console.error('Firebase error:', err);
-    const el = document.getElementById('loadingOverlay');
-    if(el) el.style.display='none';
-    // Screen-এ error দেখাও
-    const notice = document.createElement('div');
-    notice.style.cssText='position:fixed;bottom:20px;left:20px;right:20px;background:#e63946;color:#fff;padding:16px;border-radius:12px;font-size:14px;z-index:999;';
-    notice.textContent = 'লোড সমস্যা: ' + (err.message || err.code || err);
-    document.body.appendChild(notice);
-    setTimeout(()=>notice.remove(), 10000);
-  });
+  db = getFirestore(app);
+  init();
 } else {
-  // Show config warning
+  showConfigNotice();
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+// ── CONFIG NOTICE ──
+function showConfigNotice() {
   const notice = document.createElement('div');
   notice.className = 'config-notice container';
-  notice.style.cssText = 'margin-top:24px;margin-bottom:0';
-  notice.innerHTML = `<span style="font-size:20px">⚙️</span>
-  <div><strong>Firebase Config প্রয়োজন</strong><br>
-  HTML ফাইলের <code>firebaseConfig</code> অবজেক্টে আপনার Firebase project-এর তথ্য বসান।
-  Firebase Console → Project Settings → Your apps → SDK setup &amp; configuration থেকে config কপি করুন।
-  তারপর Firestore-এ <code>movies</code> collection তৈরি করুন উপরে দেওয়া structure অনুযায়ী।</div>`;
-  document.getElementById('page-home').prepend(notice);
-  hide('loadingOverlay');
+  notice.style.marginTop = '20px';
+  notice.innerHTML = `
+    <span class="icon">⚠️</span>
+    <div>
+      <strong>Firebase Config সেট করা হয়নি।</strong><br>
+      HTML ফাইলে <code>firebaseConfig</code> অবজেক্টে আপনার Firebase প্রজেক্টের তথ্য বসান।
+      Firebase Console → Project Settings → Your apps থেকে config কপি করুন।
+      Firestore-এ <code>movies</code> collection তৈরি করুন নিচের structure অনুযায়ী।
+    </div>
+  `;
+  document.getElementById('page-home').insertBefore(notice, document.getElementById('page-home').firstChild);
+  showDemoMovies();
 }
 
-// ── LOAD MOVIES FROM FIRESTORE ──
-async function loadMovies() {
-  // orderBy এড়িয়ে সরাসরি load — Firestore index error এড়ানোর জন্য
-  const snap = await getDocs(collection(db, 'movies'));
-  allMovies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  // JS-এ createdAt দিয়ে sort
-  allMovies.sort((a, b) => {
-    const ta = a.createdAt?.seconds || 0;
-    const tb = b.createdAt?.seconds || 0;
-    return tb - ta;
+// ── INIT ──
+async function init() {
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    updateNavAuth(user);
   });
-  renderHome();
-  renderGenrePills();
-  populateFilterOptions();
+
+  try {
+    await loadMovies();
+  } catch(e) {
+    console.error(e);
+    showToast('মুভি লোড করতে সমস্যা হয়েছে', 'error');
+  }
+  document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
-// ── RENDER HOME ──
-function renderHome() {
+// ── LOAD ALL MOVIES ──
+async function loadMovies() {
+  const q = query(collection(db, 'movies'), orderBy('createdAt', 'desc'));
+  const snap = await getDocs(q);
+  allMovies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAll();
+}
+
+// ── RENDER ALL ──
+function renderAll() {
   renderHero();
-  renderGrid('latestGrid', allMovies.slice(0, 10));
-  const trending = [...allMovies].sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 10);
-  renderGrid('trendingGrid', trending);
+  renderLatest();
+  renderTrending();
+  renderGenrePills();
+  populateFilters();
 }
 
+// ── HERO ──
 function renderHero() {
-  const m = allMovies.find(x => x.featured) || allMovies[0];
-  if (!m) return;
-  document.getElementById('heroBgImg').src = m.posterUrl || '';
-  document.getElementById('heroGenre').textContent = (m.genres || [])[0] || 'মুভি';
-  document.getElementById('heroRating').textContent = m.rating ? `★ IMDb ${m.rating}` : '';
-  document.getElementById('heroYear').textContent = m.year ? `· ${m.year}` : '';
-  document.getElementById('heroTitle').textContent = m.title || '';
-  document.getElementById('heroSynopsis').textContent = m.synopsis || '';
-  document.getElementById('heroBtn').onclick = () => openDetail(m.id);
+  if (!allMovies.length) return;
+  const featured = allMovies.find(m => m.featured) || allMovies[0];
+  document.getElementById('heroBgImg').src = featured.posterUrl || '';
+  document.getElementById('heroGenre').textContent = (featured.genres || [])[0] || 'মুভি';
+  document.getElementById('heroRating').textContent = featured.rating ? `★ IMDb ${featured.rating}` : '';
+  document.getElementById('heroTitle').textContent = featured.title || '';
+  document.getElementById('heroSynopsis').textContent = featured.synopsis || '';
+  document.getElementById('heroWatchBtn').onclick = () => openDetail(featured.id);
 }
 
-// ── RENDER GRID ──
-function renderGrid(id, movies) {
-  document.getElementById(id).innerHTML = movies.length
-    ? movies.map(m => cardHTML(m)).join('')
-    : `<div class="empty-state"><div class="icon">🎬</div><h3>কোনো মুভি নেই</h3><p>Firebase Console থেকে movies collection-এ মুভি যোগ করুন।</p></div>`;
+// ── LATEST GRID ──
+function renderLatest() {
+  const latest = allMovies.slice(0, 10);
+  document.getElementById('latestGrid').innerHTML = latest.map(m => movieCard(m)).join('') || emptyState();
 }
 
-function cardHTML(m) {
-  const qual = (m.downloadLinks || []).slice(-1)[0]?.quality || m.quality || 'HD';
+// ── TRENDING ──
+function renderTrending() {
+  const trending = [...allMovies].sort((a,b) => (b.views||0)-(a.views||0)).slice(0,10);
+  document.getElementById('trendingGrid').innerHTML = trending.map(m => movieCard(m)).join('') || emptyState();
+}
+
+// ── MOVIE CARD HTML ──
+function movieCard(m) {
+  const qual = (m.downloadLinks && m.downloadLinks.length > 0)
+    ? m.downloadLinks[m.downloadLinks.length-1].quality
+    : (m.quality || 'HD');
   return `<div class="card" onclick="openDetail('${m.id}')">
     <div class="poster">
-      <img src="${m.posterUrl || ''}" alt="${esc(m.title)}" loading="lazy" onerror="this.style.opacity=0"/>
-      <span class="quality-badge">${esc(qual)}</span>
+      <img src="${m.posterUrl || ''}" alt="${m.title}" loading="lazy" onerror="this.style.opacity=0" />
+      <span class="quality-badge">${qual}</span>
     </div>
-    <h3>${esc(m.title || '')}</h3>
+    <h3>${m.title || ''}</h3>
     <div class="meta-row">
-      <span>${m.year || ''} · ${(m.genres || [])[0] || ''}</span>
+      <span>${m.year || ''} · ${(m.genres||[])[0] || ''}</span>
       <span class="rating">★ ${m.rating || ''}</span>
     </div>
   </div>`;
 }
 
+function emptyState() {
+  return `<div class="empty-state" style="grid-column:1/-1"><div class="icon">🎬</div><h3>কোনো মুভি নেই</h3><p>Firebase Firestore-এ movies collection-এ মুভি যোগ করুন।</p></div>`;
+}
+
 // ── GENRE PILLS ──
 function renderGenrePills() {
   const genres = [...new Set(allMovies.flatMap(m => m.genres || []))].sort();
-  const html = genres.map(g => `<span class="pill" onclick="filterByGenre('${esc(g)}')">${esc(g)}</span>`).join('');
-  document.getElementById('genrePillsHome').innerHTML = html;
-  document.getElementById('genrePillsPage').innerHTML = html;
-}
-
-// ── POPULATE FILTER OPTIONS ──
-function populateFilterOptions() {
-  const genres = [...new Set(allMovies.flatMap(m => m.genres || []))].sort();
+  const pills = genres.map(g => `<span class="pill" onclick="filterByGenre('${g}')">${g}</span>`).join('');
+  document.getElementById('genrePills').innerHTML = pills;
+  document.getElementById('genrePillsPage').innerHTML = pills;
+  // genre filter select
   const gf = document.getElementById('genreFilter');
-  genres.forEach(g => { const o = new Option(g, g); gf.appendChild(o); });
-
-  const years = [...new Set(allMovies.map(m => m.year).filter(Boolean))].sort((a, b) => b - a);
-  const yf = document.getElementById('yearFilter');
-  years.forEach(y => { const o = new Option(y, y); yf.appendChild(o); });
+  genres.forEach(g => {
+    const opt = document.createElement('option');
+    opt.value = g; opt.textContent = g;
+    gf.appendChild(opt);
+  });
 }
 
-// ── FILTERS ──
-window.applyFilters = function() {
-  const genre   = document.getElementById('genreFilter').value;
-  const year    = document.getElementById('yearFilter').value;
+function populateFilters() {
+  const years = [...new Set(allMovies.map(m => m.year).filter(Boolean))].sort((a,b)=>b-a);
+  const yf = document.getElementById('yearFilter');
+  years.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yf.appendChild(opt);
+  });
+}
+
+// ── ALL MOVIES PAGE ──
+window.filterMovies = function() {
+  const genre = document.getElementById('genreFilter').value;
+  const year = document.getElementById('yearFilter').value;
   const quality = document.getElementById('qualityFilter').value;
-  const sort    = document.getElementById('sortFilter').value;
-
-  let list = [...allMovies];
-  if (genre)   list = list.filter(m => (m.genres || []).includes(genre));
-  if (year)    list = list.filter(m => String(m.year) === year);
-  if (quality) list = list.filter(m => (m.downloadLinks || []).some(l => l.quality === quality));
-
-  if (sort === 'rating') list.sort((a, b) => parseFloat(b.rating || 0) - parseFloat(a.rating || 0));
-  else if (sort === 'views') list.sort((a, b) => (b.views || 0) - (a.views || 0));
-
-  document.getElementById('moviesCount').textContent = `${list.length} টি মুভি`;
-  renderGrid('allMoviesGrid', list);
+  let filtered = allMovies;
+  if (genre) filtered = filtered.filter(m => (m.genres||[]).includes(genre));
+  if (year) filtered = filtered.filter(m => String(m.year) === year);
+  if (quality) filtered = filtered.filter(m => (m.downloadLinks||[]).some(l => l.quality === quality));
+  document.getElementById('moviesCount').textContent = `${filtered.length} টি মুভি`;
+  document.getElementById('allMoviesGrid').innerHTML = filtered.map(m => movieCard(m)).join('') || emptyState();
 }
 
 // ── GENRE FILTER ──
-function filterByGenre(genre) {
-  goPage('genres');
+window.filterByGenre = function(genre) {
+  showPage('genres');
   document.querySelectorAll('#genrePillsPage .pill').forEach(p => {
     p.classList.toggle('active', p.textContent === genre);
   });
-  const list = allMovies.filter(m => (m.genres || []).includes(genre));
-  renderGrid('genreMoviesGrid', list);
-}
-
-// ── DETAIL ──
-function openDetail(id) {
-  const m = allMovies.find(x => x.id === id);
-  if (!m) return;
-
-  document.getElementById('detailBg').style.backgroundImage = `url(${m.posterUrl || ''})`;
-  document.getElementById('detailPoster').src = m.posterUrl || '';
-  document.getElementById('detailPoster').alt = m.title || '';
-  document.getElementById('detailSource').textContent = m.source || 'WEB-DL';
-  document.getElementById('detailRating').textContent = m.rating ? `★ ${m.rating}` : '';
-  document.getElementById('detailTitle').textContent = m.title || '';
-  document.getElementById('detailSynopsis').textContent = m.synopsis || '';
-
-  document.getElementById('detailMeta').innerHTML = [
-    m.genres  ? `<span>🎬 ${m.genres.join(', ')}</span>` : '',
-    m.duration ? `<span>⏱ ${m.duration}</span>` : '',
-    m.year    ? `<span>📅 ${m.year}</span>` : '',
-    m.language ? `<span>🌐 ${m.language}</span>` : ''
-  ].filter(Boolean).join('');
-
-  document.getElementById('detailInfoGrid').innerHTML = [
-    m.director ? `<div><dt>পরিচালক</dt><dd>${esc(m.director)}</dd></div>` : '',
-    m.cast     ? `<div><dt>অভিনয়ে</dt><dd>${esc(m.cast)}</dd></div>` : '',
-    m.country  ? `<div><dt>দেশ</dt><dd>${esc(m.country)}</dd></div>` : '',
-    m.language ? `<div><dt>ভাষা</dt><dd>${esc(m.language)}</dd></div>` : ''
-  ].filter(Boolean).join('');
-
-  const links = m.downloadLinks || [];
-  if (links.length) {
-    document.getElementById('detailDlGrid').innerHTML = links.map((l, i) => {
-      const rec = l.recommended || (!links.some(x => x.recommended) && i === Math.floor(links.length / 2));
-      return `<div class="dl-card ${rec ? 'recommended' : ''}">
-        <div class="dl-head">
-          <span class="dl-q">${esc(l.quality)}</span>
-          <span class="dl-lbl ${rec ? 'primary' : ''}">${rec ? 'RECOMMENDED' : l.quality + ' QUALITY'}</span>
-        </div>
-        <p>ফাইল: ${esc(l.size || 'N/A')}</p>
-        <a href="${l.url || '#'}" target="_blank" rel="noopener" class="dl-btn ${rec ? 'primary' : ''}">⬇ ডাউনলোড করুন</a>
-      </div>`;
-    }).join('');
-  } else {
-    document.getElementById('detailDlGrid').innerHTML = `<p style="color:var(--muted);font-size:14px">ডাউনলোড লিঙ্ক এখনো যোগ করা হয়নি।</p>`;
-  }
-
-  goPage('detail');
-
-  // increment views
-  if (IS_CONFIGURED && db) {
-    updateDoc(doc(db, 'movies', id), { views: increment(1) }).catch(() => {});
-  }
+  const filtered = allMovies.filter(m => (m.genres||[]).includes(genre));
+  document.getElementById('genreMoviesGrid').innerHTML = filtered.map(m => movieCard(m)).join('') || emptyState();
 }
 
 // ── SEARCH ──
-function handleSearch(val) {
-  const dd = document.getElementById('searchDropdown');
+window.handleSearch = function(val) {
+  const dropdown = document.getElementById('searchDropdown');
   const q = val.trim().toLowerCase();
-  if (!q || !allMovies.length) { dd.classList.remove('open'); return; }
+  if (!q || !allMovies.length) { dropdown.classList.remove('open'); return; }
   const results = allMovies.filter(m =>
-    (m.title || '').toLowerCase().includes(q) ||
-    (m.genres || []).some(g => g.toLowerCase().includes(q)) ||
-    String(m.year || '').includes(q)
+    (m.title||'').toLowerCase().includes(q) ||
+    (m.genres||[]).some(g => g.toLowerCase().includes(q))
   ).slice(0, 6);
-  if (!results.length) { dd.classList.remove('open'); return; }
-  dd.innerHTML = results.map(m => `
-    <div class="sr-item" onclick="openDetail('${m.id}')">
-      <img src="${m.posterUrl || ''}" alt="${esc(m.title)}" onerror="this.style.opacity=0"/>
-      <div>
-        <div class="sr-title">${esc(m.title)}</div>
-        <div class="sr-meta">${m.year || ''} · ${(m.genres || [])[0] || ''} · ★${m.rating || ''}</div>
+  if (!results.length) { dropdown.classList.remove('open'); return; }
+  dropdown.innerHTML = results.map(m => `
+    <div class="search-result-item" onclick="openDetail('${m.id}')">
+      <img src="${m.posterUrl||''}" alt="${m.title}" onerror="this.style.opacity=0" />
+      <div class="sr-info">
+        <div class="sr-title">${m.title}</div>
+        <div class="sr-meta">${m.year||''} · ${(m.genres||[])[0]||''} · ★${m.rating||''}</div>
       </div>
     </div>`).join('');
-  dd.classList.add('open');
-}
-function closeSearch() { document.getElementById('searchDropdown').classList.remove('open'); }
-
-// ── PAGE NAVIGATION ──
-function goPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(`page-${name}`).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const navMap = { home: 'navHome', movies: 'navMovies', genres: 'navGenres' };
-  if (navMap[name]) document.getElementById(navMap[name])?.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  if (name === 'movies') applyFilters();
-  if (pageHistory[pageHistory.length - 1] !== name) pageHistory.push(name);
-}
-function goBack() {
-  pageHistory.pop();
-  goPage(pageHistory[pageHistory.length - 1] || 'home');
+  dropdown.classList.add('open');
 }
 
-// ── AUTH NAV ──
-function renderNavAuth(user) {
-  const area = document.getElementById('navAuthArea');
-  if (user) {
-    const initials = (user.displayName || user.email || 'U').charAt(0).toUpperCase();
-    area.innerHTML = `
-      <div class="user-avatar" onclick="toggleUserMenu()" id="userAvatarBtn">${initials}</div>
-      <div class="user-dropdown" id="userDropdown">
-        <div style="padding:14px 18px;border-bottom:1px solid var(--border)">
-          <div style="font-weight:700;font-size:14px;color:var(--fg)">${esc(user.displayName || 'ব্যবহারকারী')}</div>
-          <div style="font-size:12px;color:var(--muted)">${esc(user.email)}</div>
-        </div>
-        <div onclick="handleLogout()">🚪 লগআউট</div>
-      </div>`;
-    document.addEventListener('click', closeUserMenuOnOutside);
-  } else {
-    area.innerHTML = `<button class="login-btn" onclick="openAuthModal()">লগইন</button>`;
+window.closeSearch = function() {
+  document.getElementById('searchDropdown').classList.remove('open');
+}
+
+// ── DETAIL PAGE ──
+window.openDetail = async function(id) {
+  const movie = allMovies.find(m => m.id === id);
+  if (!movie) return;
+
+  // increment views if firebase is set
+  if (CONFIG_SET && db) {
+    updateDoc(doc(db, 'movies', id), { views: increment(1) }).catch(()=>{});
   }
-}
-window.toggleUserMenu = function() {
-  document.getElementById('userDropdown')?.classList.toggle('open');
-}
-function closeUserMenuOnOutside(e) {
-  if (!e.target.closest('.user-avatar') && !e.target.closest('.user-dropdown')) {
-    document.getElementById('userDropdown')?.classList.remove('open');
-  }
-}
 
-// ── AUTH MODAL ──
-function openAuthModal() { document.getElementById('authModal').classList.add('open'); }
-function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
-function handleModalClick(e) { if (e.target === document.getElementById('authModal')) closeAuthModal(); }
-function switchToLogin()    { document.getElementById('loginForm').style.display=''; document.getElementById('registerForm').style.display='none'; }
-function switchToRegister() { document.getElementById('loginForm').style.display='none'; document.getElementById('registerForm').style.display=''; }
+  document.getElementById('detailBg').style.backgroundImage = `url(${movie.posterUrl||''})`;
+  document.getElementById('detailPoster').src = movie.posterUrl || '';
+  document.getElementById('detailPoster').alt = movie.title;
+  document.getElementById('detailSource').textContent = movie.source || 'WEB-DL';
+  document.getElementById('detailRating').textContent = movie.rating ? `★ ${movie.rating}` : '';
+  document.getElementById('detailTitle').textContent = movie.title || '';
+  document.getElementById('detailSynopsis').textContent = movie.synopsis || '';
 
-async function handleLogin() {
-  if (!IS_CONFIGURED) return showToast('Firebase config সেট করুন', 'error');
-  const email = document.getElementById('loginEmail').value.trim();
-  const pass  = document.getElementById('loginPassword').value;
-  const errEl = document.getElementById('loginError');
-  errEl.classList.remove('show');
-  const btn = document.getElementById('loginSubmit');
-  btn.textContent = 'লগইন হচ্ছে...'; btn.disabled = true;
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-    closeAuthModal();
-    showToast('সফলভাবে লগইন হয়েছে ✓', 'success');
-  } catch(e) {
-    errEl.textContent = authError(e.code);
-    errEl.classList.add('show');
-  }
-  btn.textContent = 'লগইন করুন'; btn.disabled = false;
-}
+  document.getElementById('detailMeta').innerHTML = [
+    movie.genres ? `🎬 ${movie.genres.join(', ')}` : '',
+    movie.duration ? `⏱ ${movie.duration}` : '',
+    movie.year ? `📅 ${movie.year}` : '',
+    movie.language ? `🌐 ${movie.language}` : ''
+  ].filter(Boolean).map(s => `<span>${s}</span>`).join('');
 
-async function handleRegister() {
-  if (!IS_CONFIGURED) return showToast('Firebase config সেট করুন', 'error');
-  const name  = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const pass  = document.getElementById('regPassword').value;
-  const errEl = document.getElementById('registerError');
-  errEl.classList.remove('show');
-  if (!name) { errEl.textContent = 'নাম লিখুন।'; errEl.classList.add('show'); return; }
-  const btn = document.getElementById('regSubmit');
-  btn.textContent = 'তৈরি হচ্ছে...'; btn.disabled = true;
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await updateProfile(cred.user, { displayName: name });
-    closeAuthModal();
-    showToast(`স্বাগতম, ${name}! ✓`, 'success');
-  } catch(e) {
-    errEl.textContent = authError(e.code);
-    errEl.classList.add('show');
-  }
-  btn.textContent = 'রেজিস্ট্রেশন করুন'; btn.disabled = false;
-}
+  document.getElementById('detailInfoGrid').innerHTML = [
+    movie.director ? `<div><dt>পরিচালক</dt><dd>${movie.director}</dd></div>` : '',
+    movie.cast ? `<div><dt>অভিনয়ে</dt><dd>${movie.cast}</dd></div>` : '',
+    movie.country ? `<div><dt>দেশ</dt><dd>${movie.country}</dd></div>` : '',
+    movie.studio ? `<div><dt>স্টুডিও</dt><dd>${movie.studio}</dd></div>` : ''
+  ].filter(Boolean).join('');
 
-async function handleLogout() {
-  await signOut(auth);
-  document.getElementById('userDropdown')?.classList.remove('open');
-  showToast('লগআউট হয়েছে', 'success');
-}
-
-function authError(code) {
-  const map = {
-    'auth/invalid-email':           'সঠিক ইমেইল লিখুন।',
-    'auth/user-not-found':          'এই ইমেইলে কোনো অ্যাকাউন্ট নেই।',
-    'auth/wrong-password':          'পাসওয়ার্ড ভুল।',
-    'auth/email-already-in-use':    'এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট আছে।',
-    'auth/weak-password':           'পাসওয়ার্ড কমপক্ষে ৬ অক্ষর হতে হবে।',
-    'auth/too-many-requests':       'অনেক চেষ্টা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।',
-    'auth/invalid-credential':      'ইমেইল বা পাসওয়ার্ড সঠিক নয়।',
-    'auth/network-request-failed':  'নেটওয়ার্ক সমস্যা। ইন্টারনেট চেক করুন।'
-  };
-  return map[code] || 'সমস্যা হয়েছে। আবার চেষ্টা করুন।';
-}
-
-// ── TOAST ──
-function showToast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type} show`;
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 3500);
-}
-window.showToast = showToast;
-
-// ── HELPERS ──
-function hide(id) { const el = document.getElementById(id); if(el){ el.classList.add('hidden'); el.style.display='none'; } }
-function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-</script>
-</body>
-</html>
+  const links = movie.downloadLinks || [];
+  if (links.length) {
+    document.getElementById('detailDlGrid').innerHTML = links.map((l, i) => {
+      const isRec = l.recommended || (i === Math.floor(links.length/2));
+      return `<div class
