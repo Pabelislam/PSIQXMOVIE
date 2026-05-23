@@ -1,191 +1,255 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Cinemax BD</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Cinemax BD — বাংলা ও আন্তর্জাতিক মুভি ডাউনলোড</title>
+<meta name="description" content="সেরা মানের বাংলা ও আন্তর্জাতিক মুভি HD, 4K কোয়ালিটিতে ডাউনলোড করুন।" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#1a1a22;--fg:#fafafa;--surface:#22222c;--border:#33333f;--muted:#9999a6;--primary:#e63946;--primary-fg:#fff;--font-bn:'Hind Siliguri',sans-serif;--font-en:'Inter',sans-serif;--font-mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{font-family:var(--font-bn);background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;line-height:1.5}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 input,select,textarea{font-family:var(--font-bn)}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
-nav{position:sticky;top:0;z-index:50;background:rgba(26,26,34,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-nav .container{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{font-family:var(--font-en);font-weight:900;font-size:22px;color:var(--primary);text-transform:uppercase;cursor:pointer;letter-spacing:-.03em}
-.nav-links{display:flex;gap:24px;font-size:14px;font-weight:500}
-.nav-links a{color:var(--muted);cursor:pointer;transition:color .2s}
-.nav-links a.active,.nav-links a:hover{color:var(--fg)}
-.nav-right{display:flex;align-items:center;gap:10px}
+nav{position:sticky;top:0;z-index:50;background:rgba(26,26,34,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+nav .container{height:78px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-family:var(--font-en);font-weight:900;font-size:24px;letter-spacing:-.04em;color:var(--primary);text-transform:uppercase;cursor:pointer}
+.nav-links{display:flex;gap:28px;font-size:14px;font-weight:500}
+.nav-links a{color:var(--muted);transition:color .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--fg)}
 .search-wrap{position:relative}
-.search{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:8px 16px 8px 36px;color:var(--fg);font-size:14px;width:200px;outline:none}
+.search{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:9px 18px 9px 38px;color:var(--fg);font-family:var(--font-bn);font-size:14px;width:220px;outline:none}
 .search:focus{border-color:var(--primary)}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+.search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
 .search-dropdown{position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;z-index:100;display:none;box-shadow:0 20px 40px rgba(0,0,0,.4)}
 .search-dropdown.open{display:block}
-.sr-item{padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .15s}
-.sr-item:hover{background:var(--border)}
-.sr-item img{width:32px;height:48px;object-fit:cover;border-radius:4px;background:var(--border)}
-.sr-title{font-size:13px;font-weight:600}
-.sr-meta{font-size:11px;color:var(--muted)}
-.login-btn{background:var(--primary);color:#fff;padding:8px 18px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:filter .2s}
+.search-result-item{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:background .15s}
+.search-result-item:hover{background:var(--border)}
+.search-result-item img{width:36px;height:54px;object-fit:cover;border-radius:6px}
+.search-result-item .sr-info{flex:1;min-width:0}
+.search-result-item .sr-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result-item .sr-meta{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.login-btn{background:var(--primary);color:var(--primary-fg);padding:9px 22px;border-radius:999px;font-weight:700;font-size:14px;transition:filter .2s;cursor:pointer}
 .login-btn:hover{filter:brightness(1.1)}
-.user-wrap{position:relative}
-.user-avatar{width:36px;height:36px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;cursor:pointer}
-.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:170px;overflow:hidden;z-index:100;display:none;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.user-menu{position:relative}
+.user-avatar{width:38px;height:38px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;cursor:pointer;border:2px solid transparent;transition:border-color .2s}
+.user-avatar:hover{border-color:var(--primary)}
+.user-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:var(--surface);border:1px solid var(--border);border-radius:14px;min-width:180px;overflow:hidden;z-index:100;display:none;box-shadow:0 20px 40px rgba(0,0,0,.4)}
 .user-dropdown.open{display:block}
-.user-dropdown div{padding:11px 16px;font-size:14px;color:var(--muted);cursor:pointer;transition:all .15s}
-.user-dropdown div:hover{background:var(--border);color:var(--fg)}
-@media(max-width:750px){.nav-links,.search-wrap{display:none}}
+.user-dropdown a{display:block;padding:12px 18px;font-size:14px;color:var(--muted);transition:all .15s;cursor:pointer}
+.user-dropdown a:hover{background:var(--border);color:var(--fg)}
+.user-dropdown .divider{height:1px;background:var(--border);margin:4px 0}
+@media (max-width:820px){.nav-links,.search-wrap{display:none}}
+
+/* PAGES */
 .page{display:none}
-.page.active{display:block}
-.hero{position:relative;min-height:75vh;display:flex;align-items:flex-end;padding-bottom:70px;overflow:hidden;background:#0d0d12}
-.hero-bg{position:absolute;inset:0}
+.page.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes reveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;padding-bottom:80px;overflow:hidden;background:#111}
+.hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 5%,rgba(26,26,34,.5) 50%,transparent),linear-gradient(to right,var(--bg) 0%,rgba(26,26,34,.2) 70%,transparent)}
-.hero-content{position:relative;z-index:1}
-.hero .tags{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.badge{background:var(--primary);color:#fff;padding:4px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;border-radius:4px}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 5%,rgba(26,26,34,.6) 50%,transparent),linear-gradient(to right,var(--bg) 5%,rgba(26,26,34,.3) 60%,transparent)}
+.hero-content{position:relative;z-index:1;animation:reveal .8s ease both}
+.hero .tags{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.badge-primary{background:var(--primary);color:var(--primary-fg);padding:5px 10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;border-radius:4px}
 .rating{color:var(--primary);font-family:var(--font-mono);font-size:13px}
-.hero h1{font-size:clamp(32px,6vw,72px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-bottom:18px;max-width:800px}
-.hero p{font-size:16px;color:var(--muted);max-width:520px;margin-bottom:24px;line-height:1.7}
-.btn-row{display:flex;flex-wrap:wrap;gap:10px}
-.btn{padding:12px 22px;border-radius:10px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s}
-.btn-light{background:var(--fg);color:var(--bg)}.btn-light:hover{background:var(--primary);color:#fff}
-.btn-ghost{background:rgba(34,34,44,.7);border:1px solid var(--border);color:var(--fg)}.btn-ghost:hover{background:var(--surface)}
-section.row{padding:60px 0}
-.row-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;gap:12px;flex-wrap:wrap}
-.row-head h2{font-size:clamp(22px,3vw,34px);font-weight:700;margin-bottom:4px}
-.row-head p{color:var(--muted);font-size:14px}
-.see-all{color:var(--primary);font-size:14px;font-weight:700;cursor:pointer;border-bottom:2px solid rgba(230,57,70,.2);padding-bottom:2px}
-.see-all:hover{border-color:var(--primary)}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:680px){.grid{grid-template-columns:repeat(2,1fr);gap:14px}}
-.card{cursor:pointer}
-.poster{position:relative;aspect-ratio:2/3;border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--surface);transition:transform .3s,box-shadow .3s}
-.poster img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.card:hover .poster{transform:translateY(-5px);box-shadow:0 0 0 1px rgba(230,57,70,.4),0 16px 32px -8px rgba(0,0,0,.5)}
-.card:hover .poster img{transform:scale(1.04)}
-.qbadge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);padding:3px 7px;border-radius:4px;font-size:10px;font-family:var(--font-mono);color:#fff;border:1px solid rgba(255,255,255,.1)}
-.card h3{font-size:14px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
+.hero h1{font-size:clamp(36px,7vw,84px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-bottom:22px;max-width:900px}
+.hero p{font-size:17px;color:var(--muted);max-width:560px;margin-bottom:28px;line-height:1.7}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{padding:14px 26px;border-radius:12px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;transition:all .2s;cursor:pointer}
+.btn-primary{background:var(--fg);color:var(--bg)}
+.btn-primary:hover{background:var(--primary);color:var(--primary-fg)}
+.btn-ghost{background:rgba(34,34,44,.6);backdrop-filter:blur(8px);border:1px solid var(--border);color:var(--fg)}
+.btn-ghost:hover{background:var(--surface)}
+
+/* ROWS */
+section.row{padding:72px 0}
+.row-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;gap:16px;flex-wrap:wrap}
+.row-head h2{font-size:clamp(24px,3.5vw,38px);font-weight:700;margin-bottom:6px}
+.row-head p{color:var(--muted)}
+.row-head .see-all{color:var(--primary);font-size:14px;font-weight:700;border-bottom:2px solid rgba(230,57,70,.25);padding-bottom:3px;transition:border-color .2s;cursor:pointer}
+.row-head .see-all:hover{border-color:var(--primary)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:28px}
+@media (max-width:1024px){.grid{grid-template-columns:repeat(4,1fr);gap:22px}}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+.card{display:block;animation:reveal .6s ease both;cursor:pointer}
+.poster{position:relative;aspect-ratio:2/3;border-radius:16px;overflow:hidden;margin-bottom:14px;box-shadow:0 0 0 1px rgba(255,255,255,.04);transition:transform .3s,box-shadow .3s;background:var(--surface)}
+.poster img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .poster{transform:translateY(-6px);box-shadow:0 0 0 1px rgba(230,57,70,.4),0 20px 40px -10px rgba(0,0,0,.5)}
+.card:hover .poster img{transform:scale(1.05)}
+.quality-badge{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);padding:4px 8px;border-radius:4px;font-size:10px;font-family:var(--font-mono);border:1px solid rgba(255,255,255,.1);color:#fff}
+.card h3{font-size:15px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
 .card:hover h3{color:var(--primary)}
-.meta-row{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:var(--font-mono)}
-.genre-strip{background:rgba(34,34,44,.4);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:50px 0}
-.genre-strip h2{font-size:clamp(20px,2.5vw,28px);font-weight:700;margin-bottom:20px}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{padding:10px 18px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.meta-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-family:var(--font-mono);gap:8px}
+
+/* GENRE STRIP */
+.genre-strip{background:rgba(34,34,44,.3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0}
+.genre-strip h2{font-size:clamp(22px,3vw,30px);font-weight:700;margin-bottom:24px}
+.genre-pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill{padding:11px 20px;border-radius:999px;background:var(--bg);border:1px solid var(--border);font-size:14px;font-weight:500;transition:all .2s;cursor:pointer}
 .pill:hover,.pill.active{border-color:var(--primary);color:var(--primary);background:rgba(230,57,70,.08)}
-.movies-page{padding:50px 0}
-.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:32px}
-.fselect{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:9px 14px;border-radius:8px;font-size:14px;outline:none;cursor:pointer;-webkit-appearance:none}
-.fselect:focus{border-color:var(--primary)}
-.finput{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:9px 14px;border-radius:8px;font-size:14px;outline:none;min-width:180px}
-.finput:focus{border-color:var(--primary)}
-.mcount{font-size:13px;color:var(--muted);font-family:var(--font-mono);margin-left:auto}
-.detail-page{position:relative;min-height:100vh;padding:50px 0 80px}
-.detail-bg{position:absolute;inset:0;height:55vh;background-size:cover;background-position:center;opacity:.2;filter:blur(6px)}
-.detail-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--bg))}
-.detail-grid{position:relative;display:grid;grid-template-columns:300px 1fr;gap:44px;align-items:start;padding-top:20px}
-@media(max-width:850px){.detail-grid{grid-template-columns:1fr;gap:28px}}
-.detail-poster{border-radius:20px;overflow:hidden;box-shadow:0 24px 48px -16px rgba(230,57,70,.15)}
-.detail-poster img{width:100%;aspect-ratio:2/3;object-fit:cover;background:var(--surface)}
-.dbadges{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
-.detail-info h1{font-size:clamp(28px,4.5vw,52px);font-weight:700;line-height:1.1;margin-bottom:16px;letter-spacing:-.02em}
-.dmeta{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:14px;margin-bottom:20px}
-.dsynopsis{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:600px}
-.dinfo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;font-size:14px}
-@media(max-width:500px){.dinfo{grid-template-columns:1fr}}
-.dinfo dt{font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:3px}
-.dinfo dd{font-weight:600}
-.dl-title{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-bottom:12px}
-.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-@media(max-width:500px){.dl-grid{grid-template-columns:1fr}}
-.dl-card{background:var(--surface);border:1px solid var(--border);padding:16px;border-radius:14px;transition:border-color .2s}
+
+/* DETAIL PAGE */
+.detail-page{position:relative;min-height:100vh;padding-top:50px;padding-bottom:80px}
+.detail-bg{position:absolute;inset:0;height:60vh;background-size:cover;background-position:center;opacity:.25;filter:blur(4px)}
+.detail-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent,var(--bg) 90%)}
+.detail-grid{position:relative;display:grid;grid-template-columns:320px 1fr;gap:50px;align-items:start;padding-top:30px}
+@media (max-width:900px){.detail-grid{grid-template-columns:1fr;gap:32px}}
+.detail-poster{border-radius:24px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(230,57,70,.15);max-width:340px}
+.detail-poster img{width:100%;aspect-ratio:2/3;object-fit:cover}
+.detail-info .badges{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.detail-info h1{font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.1;margin-bottom:18px;letter-spacing:-.02em}
+.meta-list{display:flex;flex-wrap:wrap;gap:18px;color:var(--muted);font-size:14px;margin-bottom:24px}
+.synopsis{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:28px;max-width:640px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:32px;font-size:14px}
+@media (max-width:600px){.info-grid{grid-template-columns:1fr}}
+.info-grid dt{font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.15em;color:var(--muted);margin-bottom:4px}
+.info-grid dd{font-weight:500}
+.dl-title{font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:14px}
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media (max-width:600px){.dl-grid{grid-template-columns:1fr}}
+.dl-card{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:16px;transition:border-color .2s}
 .dl-card:hover{border-color:rgba(230,57,70,.4)}
-.dl-card.rec{border-color:rgba(230,57,70,.5);box-shadow:0 0 0 1px rgba(230,57,70,.15)}
-.dl-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
-.dl-q{font-family:var(--font-mono);font-weight:700;font-size:16px}
-.dl-lbl{font-size:9px;font-family:var(--font-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
-.dl-lbl.p{color:var(--primary)}
-.dl-card p{font-size:12px;color:var(--muted);margin-bottom:12px}
-.dl-btn{width:100%;padding:9px;border-radius:8px;background:rgba(230,57,70,.1);color:var(--primary);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .2s;text-decoration:none;border:none;cursor:pointer;font-family:inherit}
-.dl-btn:hover,.dl-btn.p{background:var(--primary);color:#fff}
-.dl-btn.p{box-shadow:0 6px 20px -6px rgba(230,57,70,.4)}
+.dl-card.recommended{border-color:rgba(230,57,70,.5);box-shadow:0 0 0 1px rgba(230,57,70,.2)}
+.dl-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.dl-q{font-family:var(--font-mono);font-weight:700;font-size:17px}
+.dl-lbl{font-size:10px;font-family:var(--font-mono);color:var(--muted)}
+.dl-lbl.primary{color:var(--primary)}
+.dl-card p{font-size:12px;color:var(--muted);margin-bottom:14px}
+.dl-btn{width:100%;padding:10px;border-radius:10px;background:rgba(230,57,70,.1);color:var(--primary);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none}
+.dl-btn:hover,.dl-btn.primary:hover{background:var(--primary);color:var(--primary-fg)}
+.dl-btn.primary{background:var(--primary);color:var(--primary-fg);box-shadow:0 8px 24px -8px rgba(230,57,70,.4)}
 .note{font-size:12px;color:var(--muted);margin-top:8px}
-.back-btn{display:inline-flex;align-items:center;gap:6px;margin-top:20px;color:var(--primary);font-weight:700;font-size:14px;cursor:pointer}
-footer{border-top:1px solid var(--border);padding:44px 0;background:rgba(34,34,44,.15)}
-footer .container{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px}
-@media(max-width:650px){footer .container{grid-template-columns:1fr;gap:24px}}
-footer p{color:var(--muted);font-size:14px;line-height:1.7;max-width:360px;margin-top:10px}
-footer h4{font-size:14px;font-weight:700;margin-bottom:14px}
-footer ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted)}
+.back-link{display:inline-flex;align-items:center;gap:6px;margin-top:24px;color:var(--primary);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .2s}
+.back-link:hover{opacity:.75}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);margin-top:40px;padding:50px 0;background:rgba(34,34,44,.2)}
+footer .container{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px}
+@media (max-width:700px){footer .container{grid-template-columns:1fr;gap:28px}}
+footer .brand{display:block;margin-bottom:14px}
+footer p{color:var(--muted);font-size:14px;line-height:1.7;max-width:380px}
+footer h4{font-size:14px;font-weight:700;margin-bottom:16px}
+footer ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted)}
 footer ul li{cursor:pointer;transition:color .2s}
 footer ul li:hover{color:var(--fg)}
-.copyright{text-align:center;padding:20px;border-top:1px solid var(--border);margin-top:36px;color:var(--muted);font-size:13px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.copyright{text-align:center;padding:24px;border-top:1px solid var(--border);margin-top:40px;color:var(--muted);font-size:13px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:420px;padding:32px;position:relative;transform:translateY(16px);transition:transform .3s}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:440px;padding:36px;position:relative;transform:translateY(20px);transition:transform .3s}
 .modal-overlay.open .modal{transform:translateY(0)}
-.modal-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:background .2s}
 .modal-close:hover{background:var(--primary)}
-.modal h2{font-size:22px;font-weight:700;margin-bottom:4px}
-.modal .sub{font-size:13px;color:var(--muted);margin-bottom:24px}
-.fg{margin-bottom:16px}
-.fg label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
-.fg input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--fg);font-size:14px;outline:none;font-family:var(--font-bn)}
-.fg input:focus{border-color:var(--primary)}
-.form-submit{width:100%;padding:12px;background:var(--primary);color:#fff;border-radius:8px;font-weight:700;font-size:14px;margin-top:4px;cursor:pointer;border:none;font-family:var(--font-bn)}
+.modal h2{font-size:26px;font-weight:700;margin-bottom:6px}
+.modal .sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:8px;color:var(--muted)}
+.form-group input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--fg);font-size:15px;outline:none;transition:border-color .2s}
+.form-group input:focus{border-color:var(--primary)}
+.form-submit{width:100%;padding:14px;background:var(--primary);color:var(--primary-fg);border-radius:12px;font-weight:700;font-size:15px;transition:filter .2s;margin-top:6px}
 .form-submit:hover{filter:brightness(1.1)}
-.form-toggle{text-align:center;margin-top:14px;font-size:14px;color:var(--muted)}
+.form-toggle{text-align:center;margin-top:18px;font-size:14px;color:var(--muted)}
 .form-toggle span{color:var(--primary);font-weight:700;cursor:pointer}
-.ferr{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.25);border-radius:8px;padding:9px 12px;font-size:13px;color:#ff8086;margin-bottom:14px;display:none}
-.ferr.show{display:block}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:14px;font-weight:500;z-index:300;transform:translateY(60px);opacity:0;transition:all .3s;box-shadow:0 16px 32px rgba(0,0,0,.3)}
+.form-toggle span:hover{text-decoration:underline}
+.form-error{background:rgba(230,57,70,.12);border:1px solid rgba(230,57,70,.3);border-radius:10px;padding:10px 14px;font-size:13px;color:#ff6b75;margin-bottom:16px;display:none}
+.form-error.show{display:block}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;right:30px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 20px;font-size:14px;font-weight:500;z-index:300;transform:translateY(80px);opacity:0;transition:all .3s;max-width:320px;box-shadow:0 20px 40px rgba(0,0,0,.3)}
 .toast.show{transform:translateY(0);opacity:1}
-.toast.s{border-color:rgba(34,197,94,.4);color:#4ade80}
-.toast.e{border-color:rgba(230,57,70,.4);color:#ff8086}
-#loadingOverlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px}
-.spinner{width:42px;height:42px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+.toast.success{border-color:rgba(34,197,94,.4);color:#4ade80}
+.toast.error{border-color:rgba(230,57,70,.4);color:#ff6b75}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-overlay.hidden{display:none}
+.spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.empty{text-align:center;padding:60px 20px;color:var(--muted);grid-column:1/-1}
-.empty .ei{font-size:40px;margin-bottom:12px}
-.empty h3{font-size:18px;font-weight:700;color:var(--fg);margin-bottom:6px}
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,rgba(51,51,63,.6) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:12px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skeleton-poster{aspect-ratio:2/3;border-radius:16px}
+.skeleton-line{height:14px;margin-bottom:8px;border-radius:4px}
+.skeleton-line.short{width:60%}
+.empty-state{text-align:center;padding:80px 20px;color:var(--muted)}
+.empty-state .icon{font-size:48px;margin-bottom:16px}
+.empty-state h3{font-size:22px;font-weight:700;color:var(--fg);margin-bottom:8px}
+
+/* MOVIES PAGE */
+.movies-page{padding:60px 0}
+.movies-page .filter-bar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px;align-items:center}
+.filter-select{background:var(--surface);border:1px solid var(--border);color:var(--fg);padding:10px 16px;border-radius:10px;font-size:14px;outline:none;cursor:pointer}
+.filter-select:focus{border-color:var(--primary)}
+.movies-count{font-size:14px;color:var(--muted);font-family:var(--font-mono);margin-left:auto}
+
+/* CONFIG NOTICE */
+.config-notice{background:rgba(230,57,70,.1);border:1px solid rgba(230,57,70,.3);border-radius:12px;padding:16px 20px;margin:20px 0;font-size:14px;color:#ff9aa0;display:flex;align-items:flex-start;gap:10px}
+.config-notice .icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.config-notice code{background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:12px}
 </style>
 </head>
 <body>
 
-<div id="loadingOverlay">
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <p style="color:var(--muted);font-size:13px;font-family:var(--font-mono)">লোড হচ্ছে...</p>
+  <p style="color:var(--muted);font-size:14px">লোড হচ্ছে...</p>
 </div>
 
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <!-- AUTH MODAL -->
 <div class="modal-overlay" id="authModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <button class="modal-close" onclick="closeAuthModal()">✕</button>
     <div id="loginForm">
-      <h2>লগইন</h2><p class="sub">অ্যাকাউন্টে প্রবেশ করুন</p>
-      <div class="ferr" id="lErr"></div>
-      <div class="fg"><label>ইমেইল</label><input type="email" id="lEmail" placeholder="ইমেইল" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-      <div class="fg"><label>পাসওয়ার্ড</label><input type="password" id="lPass" placeholder="পাসওয়ার্ড" onkeydown="if(event.key==='Enter')doLogin()"/></div>
-      <button class="form-submit" id="lBtn" onclick="doLogin()">লগইন করুন</button>
-      <p class="form-toggle">নতুন? <span onclick="switchForm('reg')">রেজিস্ট্রেশন করুন</span></p>
+      <h2>স্বাগতম</h2>
+      <p class="sub">আপনার অ্যাকাউন্টে লগইন করুন</p>
+      <div class="form-error" id="loginError"></div>
+      <div class="form-group">
+        <label>ইমেইল</label>
+        <input type="email" id="loginEmail" placeholder="আপনার ইমেইল" />
+      </div>
+      <div class="form-group">
+        <label>পাসওয়ার্ড</label>
+        <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড" />
+      </div>
+      <button class="form-submit" onclick="handleLogin()">লগইন করুন</button>
+      <p class="form-toggle">নতুন ব্যবহারকারী? <span onclick="switchToRegister()">রেজিস্ট্রেশন করুন</span></p>
     </div>
-    <div id="regForm" style="display:none">
-      <h2>রেজিস্ট্রেশন</h2><p class="sub">নতুন অ্যাকাউন্ট তৈরি করুন</p>
-      <div class="ferr" id="rErr"></div>
-      <div class="fg"><label>নাম</label><input type="text" id="rName" placeholder="আপনার নাম"/></div>
-      <div class="fg"><label>ইমেইল</label><input type="email" id="rEmail" placeholder="ইমেইল"/></div>
-      <div class="fg"><label>পাসওয়ার্ড</label><input type="password" id="rPass" placeholder="কমপক্ষে ৬ অক্ষর" onkeydown="if(event.key==='Enter')doRegister()"/></div>
-      <button class="form-submit" id="rBtn" onclick="doRegister()">রেজিস্ট্রেশন</button>
-      <p class="form-toggle">অ্যাকাউন্ট আছে? <span onclick="switchForm('login')">লগইন করুন</span></p>
+    <div id="registerForm" style="display:none">
+      <h2>নতুন অ্যাকাউন্ট</h2>
+      <p class="sub">বিনামূল্যে রেজিস্ট্রেশন করুন</p>
+      <div class="form-error" id="registerError"></div>
+      <div class="form-group">
+        <label>নাম</label>
+        <input type="text" id="regName" placeholder="আপনার নাম" />
+      </div>
+      <div class="form-group">
+        <label>ইমেইল</label>
+        <input type="email" id="regEmail" placeholder="আপনার ইমেইল" />
+      </div>
+      <div class="form-group">
+        <label>পাসওয়ার্ড</label>
+        <input type="password" id="regPassword" placeholder="কমপক্ষে ৬ অক্ষর" />
+      </div>
+      <button class="form-submit" onclick="handleRegister()">রেজিস্ট্রেশন করুন</button>
+      <p class="form-toggle">অ্যাকাউন্ট আছে? <span onclick="switchToLogin()">লগইন করুন</span></p>
     </div>
   </div>
 </div>
@@ -193,428 +257,425 @@ footer ul li:hover{color:var(--fg)}
 <!-- NAV -->
 <nav>
   <div class="container">
-    <span class="brand" onclick="goPage('home')">Cinemax BD</span>
+    <span class="brand" onclick="goHome()">Cinemax BD</span>
     <div class="nav-links">
-      <a id="nh" class="active" onclick="goPage('home')">হোম</a>
-      <a id="nm" onclick="goPage('movies')">সকল মুভি</a>
-      <a id="ng" onclick="goPage('genres')">জেনার</a>
+      <a onclick="goHome()" id="nav-home" class="active">হোম</a>
+      <a onclick="goMovies()">সকল মুভি</a>
+      <a onclick="goGenres()">জেনার</a>
     </div>
     <div class="nav-right">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
-        <input class="search" id="searchInput" placeholder="মুভি খুঁজুন..." oninput="doSearch(this.value)" onfocus="doSearch(this.value)" onblur="setTimeout(closeSearch,200)"/>
-        <div class="search-dropdown" id="searchDD"></div>
+        <input class="search" id="searchInput" placeholder="মুভি খুঁজুন..." oninput="handleSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)" onfocus="handleSearch(this.value)" />
+        <div class="search-dropdown" id="searchDropdown"></div>
       </div>
-      <div id="authArea"><button class="login-btn" onclick="openAuth()">লগইন</button></div>
+      <div id="navAuthArea">
+        <button class="login-btn" onclick="openAuthModal()">লগইন</button>
+      </div>
     </div>
   </div>
 </nav>
 
+<!-- MAIN -->
 <main>
-<!-- HOME -->
+
+<!-- HOME PAGE -->
 <div class="page active" id="page-home">
-  <div class="hero" id="heroWrap">
-    <div class="hero-bg"><img id="heroBg" src="" alt=""/></div>
-    <div class="container hero-content">
-      <div class="tags">
-        <span class="badge" id="hGenre">—</span>
-        <span class="rating" id="hRating"></span>
-        <span class="rating" id="hYear" style="color:var(--muted)"></span>
-      </div>
-      <h1 id="hTitle">মুভি লোড হচ্ছে...</h1>
-      <p id="hSyn"></p>
-      <div class="btn-row">
-        <button class="btn btn-light" id="hBtn">▶ বিস্তারিত দেখুন</button>
-        <button class="btn btn-ghost" onclick="goPage('movies')">📋 সকল মুভি</button>
+  <div id="heroSection">
+    <div class="hero">
+      <div class="hero-bg"><img src="" id="heroBgImg" alt=""/></div>
+      <div class="container hero-content">
+        <div class="tags">
+          <span class="badge-primary" id="heroGenre">লোড হচ্ছে</span>
+          <span class="rating" id="heroRating"></span>
+        </div>
+        <h1 id="heroTitle">মুভি লোড হচ্ছে...</h1>
+        <p id="heroSynopsis"></p>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="heroWatchBtn" onclick="">▶ বিস্তারিত দেখুন</button>
+          <button class="btn btn-ghost" onclick="goMovies()">📋 সকল মুভি</button>
+        </div>
       </div>
     </div>
   </div>
-  <section class="row">
+
+  <section class="row" id="latestRow">
     <div class="container">
-      <div class="row-head"><div><h2>সর্বশেষ মুভি</h2><p>নতুন যোগ হওয়া</p></div><a class="see-all" onclick="goPage('movies')">সব দেখুন →</a></div>
-      <div class="grid" id="latestGrid"><div class="empty"><div class="ei">⏳</div><h3>লোড হচ্ছে...</h3></div></div>
+      <div class="row-head">
+        <div><h2>সর্বশেষ মুভি</h2><p>নতুন যোগ হওয়া মুভি</p></div>
+        <a class="see-all" onclick="goMovies()">সব দেখুন →</a>
+      </div>
+      <div class="grid" id="latestGrid">
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+      </div>
     </div>
   </section>
+
   <section class="genre-strip">
     <div class="container">
       <h2>জেনার অনুসারে দেখুন</h2>
-      <div class="pills" id="homePills"></div>
+      <div class="genre-pills" id="genrePills"></div>
     </div>
   </section>
-  <section class="row">
+
+  <section class="row" id="trendingRow">
     <div class="container">
-      <div class="row-head"><div><h2>সর্বাধিক দেখা</h2><p>জনপ্রিয় মুভি</p></div><a class="see-all" onclick="goPage('movies')">সব দেখুন →</a></div>
-      <div class="grid" id="trendingGrid"><div class="empty"><div class="ei">⏳</div><h3>লোড হচ্ছে...</h3></div></div>
+      <div class="row-head">
+        <div><h2>ট্রেন্ডিং</h2><p>সবচেয়ে বেশি দেখা মুভি</p></div>
+        <a class="see-all" onclick="goMovies()">সব দেখুন →</a>
+      </div>
+      <div class="grid" id="trendingGrid">
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+        <div class="skeleton skeleton-poster"></div>
+      </div>
     </div>
   </section>
 </div>
 
-<!-- MOVIES -->
+<!-- ALL MOVIES PAGE -->
 <div class="page" id="page-movies">
   <div class="movies-page">
     <div class="container">
-      <div class="row-head"><div><h2>সকল মুভি</h2><p>সম্পূর্ণ কালেকশন</p></div></div>
-      <div class="filter-bar">
-        <input class="finput" id="mSearch" placeholder="🔍 নাম খুঁজুন..." oninput="applyFilters()"/>
-        <select class="fselect" id="gFilter" onchange="applyFilters()"><option value="">সব জেনার</option></select>
-        <select class="fselect" id="yFilter" onchange="applyFilters()"><option value="">সব বছর</option></select>
-        <select class="fselect" id="qFilter" onchange="applyFilters()">
-          <option value="">সব কোয়ালিটি</option>
-          <option>4K</option><option>1080p</option><option>720p</option><option>480p</option>
-        </select>
-        <select class="fselect" id="sFilter" onchange="applyFilters()">
-          <option value="new">নতুন আগে</option>
-          <option value="views">জনপ্রিয়</option>
-          <option value="rating">রেটিং</option>
-        </select>
-        <span class="mcount" id="mCount"></span>
+      <div class="row-head">
+        <div><h2>সকল মুভি</h2><p>সম্পূর্ণ কালেকশন</p></div>
       </div>
-      <div class="grid" id="allGrid"></div>
+      <div class="filter-bar">
+        <select class="filter-select" id="genreFilter" onchange="filterMovies()">
+          <option value="">সকল জেনার</option>
+        </select>
+        <select class="filter-select" id="yearFilter" onchange="filterMovies()">
+          <option value="">সকল বছর</option>
+        </select>
+        <select class="filter-select" id="qualityFilter" onchange="filterMovies()">
+          <option value="">সকল কোয়ালিটি</option>
+          <option value="4K">4K</option>
+          <option value="1080p">1080p</option>
+          <option value="720p">720p</option>
+          <option value="480p">480p</option>
+        </select>
+        <span class="movies-count" id="moviesCount"></span>
+      </div>
+      <div class="grid" id="allMoviesGrid"></div>
     </div>
   </div>
 </div>
 
-<!-- GENRES -->
+<!-- GENRES PAGE -->
 <div class="page" id="page-genres">
   <div class="movies-page">
     <div class="container">
-      <div class="row-head"><div><h2>জেনার</h2><p>পছন্দের ধরন বেছে নিন</p></div></div>
-      <div class="pills" id="genrePills" style="margin-bottom:36px"></div>
-      <div class="grid" id="genreGrid"><div class="empty"><div class="ei">👆</div><h3>জেনার বেছে নিন</h3></div></div>
+      <div class="row-head">
+        <div><h2>জেনার</h2><p>পছন্দের ধরন বেছে নিন</p></div>
+      </div>
+      <div class="genre-pills" id="genrePillsPage" style="margin-bottom:40px"></div>
+      <div class="grid" id="genreMoviesGrid"></div>
     </div>
   </div>
 </div>
 
-<!-- DETAIL -->
+<!-- MOVIE DETAIL PAGE -->
 <div class="page" id="page-detail">
   <section class="detail-page">
-    <div class="detail-bg" id="dBg"></div>
+    <div class="detail-bg" id="detailBg"></div>
     <div class="container">
       <div class="detail-grid">
-        <div class="detail-poster"><img id="dPoster" src="" alt=""/></div>
+        <div class="detail-poster">
+          <img id="detailPoster" src="" alt="" />
+        </div>
         <div class="detail-info">
-          <div class="dbadges"><span class="badge" id="dSource">WEB-DL</span><span class="rating" id="dRating"></span></div>
-          <h1 id="dTitle"></h1>
-          <div class="dmeta" id="dMeta"></div>
-          <p class="dsynopsis" id="dSyn"></p>
-          <dl class="dinfo" id="dInfo"></dl>
+          <div class="badges">
+            <span class="badge-primary" id="detailSource">WEB-DL</span>
+            <span class="rating" id="detailRating"></span>
+          </div>
+          <h1 id="detailTitle"></h1>
+          <div class="meta-list" id="detailMeta"></div>
+          <p class="synopsis" id="detailSynopsis"></p>
+          <dl class="info-grid" id="detailInfoGrid"></dl>
           <h4 class="dl-title">ডাউনলোড লিঙ্কস</h4>
-          <div class="dl-grid" id="dLinks"></div>
-          <p class="note">* ডাউনলোডের আগে নিশ্চিত করুন এটি আপনার দেশে বৈধ।</p>
-          <span class="back-btn" onclick="goBack()">← পিছনে যান</span>
+          <div class="dl-grid" id="detailDlGrid"></div>
+          <p class="note">* ডাউনলোডের আগে নিশ্চিত করুন আপনার দেশের কপিরাইট আইন অনুযায়ী এটি বৈধ।</p>
+          <a class="back-link" onclick="history.back()">← পিছনে যান</a>
         </div>
       </div>
     </div>
   </section>
 </div>
+
 </main>
 
 <footer>
   <div class="container">
     <div>
-      <span class="brand">Cinemax BD</span>
-      <p>সেরা মানের বাংলা ও আন্তর্জাতিক মুভি ডাউনলোডের নির্ভরযোগ্য প্ল্যাটফর্ম।</p>
+      <span class="brand" style="display:block;margin-bottom:14px">Cinemax BD</span>
+      <p>সেরা মানের বাংলা ও আন্তর্জাতিক মুভি দেখার নির্ভরযোগ্য প্ল্যাটফর্ম। আমরা শুধু লিঙ্ক শেয়ার করি, কোনো ফাইল হোস্ট করি না।</p>
     </div>
     <div>
       <h4>দ্রুত লিঙ্ক</h4>
       <ul>
-        <li onclick="goPage('home')">হোম</li>
-        <li onclick="goPage('movies')">সকল মুভি</li>
-        <li onclick="goPage('genres')">জেনার</li>
+        <li onclick="goHome()">হোম</li>
+        <li onclick="goMovies()">সকল মুভি</li>
+        <li onclick="goGenres()">জেনার</li>
       </ul>
     </div>
     <div>
       <h4>যোগাযোগ</h4>
-      <ul><li>cinmaxbd@gmail.com</li><li>Facebook</li><li>Telegram</li></ul>
+      <ul>
+        <li>cinmaxbd@gmail.com</li>
+        <li>Facebook Page</li>
+        <li>Telegram Channel</li>
+      </ul>
     </div>
   </div>
-  <div class="copyright">© ২০২৪ Cinemax BD</div>
+  <div class="copyright">© ২০২৪ Cinemax BD — সকল স্বত্ব সংরক্ষিত</div>
 </footer>
 
+<!-- Firebase SDK -->
 <script type="module">
-import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile }
-                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, getDocs, doc, updateDoc, increment }
-                               from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, getDocs, getDoc, doc, query, orderBy, limit, where, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// force hide loading after 6s no matter what
-setTimeout(() => { document.getElementById('loadingOverlay').style.display='none'; }, 6000);
-
-const CFG = {
-  apiKey:            "AIzaSyDmma0fnGeItKRr7gBVojEkEIJNjhPGKwc",
-  authDomain:        "psiqx-movie.firebaseapp.com",
-  projectId:         "psiqx-movie",
-  storageBucket:     "psiqx-movie.firebasestorage.app",
-  messagingSenderId: "950855552839",
-  appId:             "1:950855552839:web:04ccf84ed28b0443df0662"
+// ============================================================
+// 🔥 FIREBASE CONFIG — নিচে আপনার Firebase config বসান
+// Firebase Console → Project Settings → Your apps → SDK setup
+// ============================================================
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
+// ============================================================
 
-const app  = initializeApp(CFG);
-const auth = getAuth(app);
-const db   = getFirestore(app);
+const CONFIG_SET = firebaseConfig.apiKey !== "YOUR_API_KEY";
 
-let movies = [];
-let history = ['home'];
+let app, auth, db;
+let allMovies = [];
+let currentUser = null;
 
-// expose globals
-Object.assign(window, {
-  goPage, goBack, openDetail, doSearch, closeSearch,
-  applyFilters, filterByGenre, openAuth, closeAuth,
-  doLogin, doRegister, switchForm, doLogout
-});
-
-// ── AUTH STATE ──
-onAuthStateChanged(auth, u => renderAuthNav(u));
-
-// ── INIT ──
-function hideLoader() {
-  document.getElementById('loadingOverlay').style.display = 'none';
+if (CONFIG_SET) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  init();
+} else {
+  showConfigNotice();
+  document.getElementById('loadingOverlay').classList.add('hidden');
 }
 
-getDocs(collection(db, 'movies'))
-  .then(snap => {
-    movies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    movies.sort((a, b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-    renderAll();
-    hideLoader();
-  })
-  .catch(e => {
-    console.error('Firestore error:', e);
-    showToast('ত্রুটি: ' + (e.message || e.code), 'e');
-    hideLoader();
+// ── CONFIG NOTICE ──
+function showConfigNotice() {
+  const notice = document.createElement('div');
+  notice.className = 'config-notice container';
+  notice.style.marginTop = '20px';
+  notice.innerHTML = `
+    <span class="icon">⚠️</span>
+    <div>
+      <strong>Firebase Config সেট করা হয়নি।</strong><br>
+      HTML ফাইলে <code>firebaseConfig</code> অবজেক্টে আপনার Firebase প্রজেক্টের তথ্য বসান।
+      Firebase Console → Project Settings → Your apps থেকে config কপি করুন।
+      Firestore-এ <code>movies</code> collection তৈরি করুন নিচের structure অনুযায়ী।
+    </div>
+  `;
+  document.getElementById('page-home').insertBefore(notice, document.getElementById('page-home').firstChild);
+  showDemoMovies();
+}
+
+// ── INIT ──
+async function init() {
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    updateNavAuth(user);
   });
+
+  try {
+    await loadMovies();
+  } catch(e) {
+    console.error(e);
+    showToast('মুভি লোড করতে সমস্যা হয়েছে', 'error');
+  }
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+// ── LOAD ALL MOVIES ──
+async function loadMovies() {
+  const q = query(collection(db, 'movies'), orderBy('createdAt', 'desc'));
+  const snap = await getDocs(q);
+  allMovies = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAll();
+}
 
 // ── RENDER ALL ──
 function renderAll() {
   renderHero();
-  renderGrid('latestGrid', movies.slice(0, 10));
-  const trending = [...movies].sort((a,b)=>(b.views||0)-(a.views||0)).slice(0,10);
-  renderGrid('trendingGrid', trending);
-  renderPills();
-  fillFilters();
+  renderLatest();
+  renderTrending();
+  renderGenrePills();
+  populateFilters();
 }
 
+// ── HERO ──
 function renderHero() {
-  const m = movies.find(x=>x.featured) || movies[0];
-  if (!m) return;
-  document.getElementById('heroBg').src       = m.posterUrl || '';
-  document.getElementById('hGenre').textContent = (m.genres||[])[0] || 'মুভি';
-  document.getElementById('hRating').textContent = m.rating ? `★ ${m.rating}` : '';
-  document.getElementById('hYear').textContent   = m.year   ? `· ${m.year}`   : '';
-  document.getElementById('hTitle').textContent  = m.title  || '';
-  document.getElementById('hSyn').textContent    = m.synopsis || '';
-  document.getElementById('hBtn').onclick = () => openDetail(m.id);
+  if (!allMovies.length) return;
+  const featured = allMovies.find(m => m.featured) || allMovies[0];
+  document.getElementById('heroBgImg').src = featured.posterUrl || '';
+  document.getElementById('heroGenre').textContent = (featured.genres || [])[0] || 'মুভি';
+  document.getElementById('heroRating').textContent = featured.rating ? `★ IMDb ${featured.rating}` : '';
+  document.getElementById('heroTitle').textContent = featured.title || '';
+  document.getElementById('heroSynopsis').textContent = featured.synopsis || '';
+  document.getElementById('heroWatchBtn').onclick = () => openDetail(featured.id);
 }
 
-function renderGrid(elId, list) {
-  const el = document.getElementById(elId);
-  if (!el) return;
-  if (!list.length) {
-    el.innerHTML = `<div class="empty"><div class="ei">🎬</div><h3>কোনো মুভি নেই</h3><p>Admin panel থেকে মুভি যোগ করুন।</p></div>`;
-    return;
-  }
-  el.innerHTML = list.map(m => {
-    const q = (m.downloadLinks||[]).slice(-1)[0]?.quality || 'HD';
-    return `<div class="card" onclick="openDetail('${m.id}')">
-      <div class="poster">
-        <img src="${m.posterUrl||''}" alt="${x(m.title)}" loading="lazy" onerror="this.style.opacity=0"/>
-        <span class="qbadge">${x(q)}</span>
-      </div>
-      <h3>${x(m.title||'')}</h3>
-      <div class="meta-row"><span>${m.year||''} · ${(m.genres||[])[0]||''}</span><span class="rating">★ ${m.rating||''}</span></div>
-    </div>`;
-  }).join('');
+// ── LATEST GRID ──
+function renderLatest() {
+  const latest = allMovies.slice(0, 10);
+  document.getElementById('latestGrid').innerHTML = latest.map(m => movieCard(m)).join('') || emptyState();
 }
 
-function renderPills() {
-  const genres = [...new Set(movies.flatMap(m=>m.genres||[]))].sort();
-  const html = genres.map(g=>`<span class="pill" onclick="filterByGenre('${x(g)}')">${x(g)}</span>`).join('');
-  document.getElementById('homePills').innerHTML = html;
-  document.getElementById('genrePills').innerHTML = html;
+// ── TRENDING ──
+function renderTrending() {
+  const trending = [...allMovies].sort((a,b) => (b.views||0)-(a.views||0)).slice(0,10);
+  document.getElementById('trendingGrid').innerHTML = trending.map(m => movieCard(m)).join('') || emptyState();
 }
 
-function fillFilters() {
-  const gf = document.getElementById('gFilter');
-  const yf = document.getElementById('yFilter');
-  [...new Set(movies.flatMap(m=>m.genres||[]))].sort().forEach(g=>{gf.appendChild(new Option(g,g))});
-  [...new Set(movies.map(m=>m.year).filter(Boolean))].sort((a,b)=>b-a).forEach(y=>{yf.appendChild(new Option(y,y))});
+// ── MOVIE CARD HTML ──
+function movieCard(m) {
+  const qual = (m.downloadLinks && m.downloadLinks.length > 0)
+    ? m.downloadLinks[m.downloadLinks.length-1].quality
+    : (m.quality || 'HD');
+  return `<div class="card" onclick="openDetail('${m.id}')">
+    <div class="poster">
+      <img src="${m.posterUrl || ''}" alt="${m.title}" loading="lazy" onerror="this.style.opacity=0" />
+      <span class="quality-badge">${qual}</span>
+    </div>
+    <h3>${m.title || ''}</h3>
+    <div class="meta-row">
+      <span>${m.year || ''} · ${(m.genres||[])[0] || ''}</span>
+      <span class="rating">★ ${m.rating || ''}</span>
+    </div>
+  </div>`;
 }
 
-// ── FILTERS ──
-function applyFilters() {
-  const q  = document.getElementById('mSearch').value.toLowerCase();
-  const g  = document.getElementById('gFilter').value;
-  const y  = document.getElementById('yFilter').value;
-  const ql = document.getElementById('qFilter').value;
-  const s  = document.getElementById('sFilter').value;
-  let list = [...movies];
-  if (q)  list = list.filter(m=>(m.title||'').toLowerCase().includes(q));
-  if (g)  list = list.filter(m=>(m.genres||[]).includes(g));
-  if (y)  list = list.filter(m=>String(m.year)===y);
-  if (ql) list = list.filter(m=>(m.downloadLinks||[]).some(l=>l.quality===ql));
-  if (s==='views')  list.sort((a,b)=>(b.views||0)-(a.views||0));
-  if (s==='rating') list.sort((a,b)=>parseFloat(b.rating||0)-parseFloat(a.rating||0));
-  document.getElementById('mCount').textContent = list.length + ' টি মুভি';
-  renderGrid('allGrid', list);
+function emptyState() {
+  return `<div class="empty-state" style="grid-column:1/-1"><div class="icon">🎬</div><h3>কোনো মুভি নেই</h3><p>Firebase Firestore-এ movies collection-এ মুভি যোগ করুন।</p></div>`;
 }
 
-function filterByGenre(g) {
-  goPage('genres');
-  document.querySelectorAll('#genrePills .pill').forEach(p=>p.classList.toggle('active', p.textContent===g));
-  renderGrid('genreGrid', movies.filter(m=>(m.genres||[]).includes(g)));
+// ── GENRE PILLS ──
+function renderGenrePills() {
+  const genres = [...new Set(allMovies.flatMap(m => m.genres || []))].sort();
+  const pills = genres.map(g => `<span class="pill" onclick="filterByGenre('${g}')">${g}</span>`).join('');
+  document.getElementById('genrePills').innerHTML = pills;
+  document.getElementById('genrePillsPage').innerHTML = pills;
+  // genre filter select
+  const gf = document.getElementById('genreFilter');
+  genres.forEach(g => {
+    const opt = document.createElement('option');
+    opt.value = g; opt.textContent = g;
+    gf.appendChild(opt);
+  });
 }
 
-// ── DETAIL ──
-function openDetail(id) {
-  const m = movies.find(x=>x.id===id);
-  if (!m) return;
-  document.getElementById('dBg').style.backgroundImage   = `url(${m.posterUrl||''})`;
-  document.getElementById('dPoster').src                  = m.posterUrl||'';
-  document.getElementById('dPoster').alt                  = m.title||'';
-  document.getElementById('dSource').textContent          = m.source||'WEB-DL';
-  document.getElementById('dRating').textContent          = m.rating ? `★ ${m.rating}` : '';
-  document.getElementById('dTitle').textContent           = m.title||'';
-  document.getElementById('dSyn').textContent             = m.synopsis||'';
-  document.getElementById('dMeta').innerHTML = [
-    m.genres   ? `<span>🎬 ${m.genres.join(', ')}</span>` : '',
-    m.duration ? `<span>⏱ ${m.duration}</span>` : '',
-    m.year     ? `<span>📅 ${m.year}</span>` : '',
-    m.language ? `<span>🌐 ${m.language}</span>` : ''
-  ].filter(Boolean).join('');
-  document.getElementById('dInfo').innerHTML = [
-    m.director ? `<div><dt>পরিচালক</dt><dd>${x(m.director)}</dd></div>` : '',
-    m.cast     ? `<div><dt>অভিনয়ে</dt><dd>${x(m.cast)}</dd></div>` : '',
-    m.country  ? `<div><dt>দেশ</dt><dd>${x(m.country)}</dd></div>` : '',
-    m.language ? `<div><dt>ভাষা</dt><dd>${x(m.language)}</dd></div>` : ''
-  ].filter(Boolean).join('');
-  const links = m.downloadLinks||[];
-  document.getElementById('dLinks').innerHTML = links.length
-    ? links.map((l,i)=>{
-        const rec = l.recommended || (!links.some(x=>x.recommended) && i===Math.floor(links.length/2));
-        return `<div class="dl-card ${rec?'rec':''}">
-          <div class="dl-head"><span class="dl-q">${x(l.quality)}</span><span class="dl-lbl ${rec?'p':''}">${rec?'BEST':l.quality}</span></div>
-          <p>${x(l.size||'N/A')}</p>
-          <a href="${l.url||'#'}" target="_blank" rel="noopener" class="dl-btn ${rec?'p':''}">⬇ ডাউনলোড</a>
-        </div>`;}).join('')
-    : '<p style="color:var(--muted);font-size:14px">লিঙ্ক যোগ করা হয়নি।</p>';
-  goPage('detail');
-  updateDoc(doc(db,'movies',id),{views:increment(1)}).catch(()=>{});
+function populateFilters() {
+  const years = [...new Set(allMovies.map(m => m.year).filter(Boolean))].sort((a,b)=>b-a);
+  const yf = document.getElementById('yearFilter');
+  years.forEach(y => {
+    const opt = document.createElement('option');
+    opt.value = y; opt.textContent = y;
+    yf.appendChild(opt);
+  });
+}
+
+// ── ALL MOVIES PAGE ──
+window.filterMovies = function() {
+  const genre = document.getElementById('genreFilter').value;
+  const year = document.getElementById('yearFilter').value;
+  const quality = document.getElementById('qualityFilter').value;
+  let filtered = allMovies;
+  if (genre) filtered = filtered.filter(m => (m.genres||[]).includes(genre));
+  if (year) filtered = filtered.filter(m => String(m.year) === year);
+  if (quality) filtered = filtered.filter(m => (m.downloadLinks||[]).some(l => l.quality === quality));
+  document.getElementById('moviesCount').textContent = `${filtered.length} টি মুভি`;
+  document.getElementById('allMoviesGrid').innerHTML = filtered.map(m => movieCard(m)).join('') || emptyState();
+}
+
+// ── GENRE FILTER ──
+window.filterByGenre = function(genre) {
+  showPage('genres');
+  document.querySelectorAll('#genrePillsPage .pill').forEach(p => {
+    p.classList.toggle('active', p.textContent === genre);
+  });
+  const filtered = allMovies.filter(m => (m.genres||[]).includes(genre));
+  document.getElementById('genreMoviesGrid').innerHTML = filtered.map(m => movieCard(m)).join('') || emptyState();
 }
 
 // ── SEARCH ──
-function doSearch(v) {
-  const dd = document.getElementById('searchDD');
-  if (!v.trim()) { dd.classList.remove('open'); return; }
-  const res = movies.filter(m=>(m.title||'').toLowerCase().includes(v.toLowerCase())).slice(0,6);
-  if (!res.length) { dd.classList.remove('open'); return; }
-  dd.innerHTML = res.map(m=>`<div class="sr-item" onclick="openDetail('${m.id}')">
-    <img src="${m.posterUrl||''}" onerror="this.style.opacity=0"/>
-    <div><div class="sr-title">${x(m.title)}</div><div class="sr-meta">${m.year||''} · ${(m.genres||[])[0]||''}</div></div>
-  </div>`).join('');
-  dd.classList.add('open');
-}
-function closeSearch() { document.getElementById('searchDD').classList.remove('open'); }
-
-// ── PAGES ──
-function goPage(name) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  ['nh','nm','ng'].forEach(id=>document.getElementById(id).classList.remove('active'));
-  const map = {home:'nh',movies:'nm',genres:'ng'};
-  if (map[name]) document.getElementById(map[name]).classList.add('active');
-  window.scrollTo({top:0,behavior:'instant'});
-  if (name==='movies') applyFilters();
-  if (history[history.length-1]!==name) history.push(name);
-}
-function goBack() {
-  history.pop();
-  goPage(history[history.length-1]||'home');
-}
-
-// ── AUTH NAV ──
-function renderAuthNav(u) {
-  const area = document.getElementById('authArea');
-  if (u) {
-    const ini = (u.displayName||u.email||'U').charAt(0).toUpperCase();
-    area.innerHTML = `<div class="user-wrap">
-      <div class="user-avatar" onclick="this.nextElementSibling.classList.toggle('open')">${ini}</div>
-      <div class="user-dropdown">
-        <div style="padding:12px 16px;border-bottom:1px solid var(--border)">
-          <div style="font-weight:700;font-size:13px">${x(u.displayName||'ব্যবহারকারী')}</div>
-          <div style="font-size:11px;color:var(--muted)">${x(u.email)}</div>
-        </div>
-        <div onclick="doLogout()">🚪 লগআউট</div>
+window.handleSearch = function(val) {
+  const dropdown = document.getElementById('searchDropdown');
+  const q = val.trim().toLowerCase();
+  if (!q || !allMovies.length) { dropdown.classList.remove('open'); return; }
+  const results = allMovies.filter(m =>
+    (m.title||'').toLowerCase().includes(q) ||
+    (m.genres||[]).some(g => g.toLowerCase().includes(q))
+  ).slice(0, 6);
+  if (!results.length) { dropdown.classList.remove('open'); return; }
+  dropdown.innerHTML = results.map(m => `
+    <div class="search-result-item" onclick="openDetail('${m.id}')">
+      <img src="${m.posterUrl||''}" alt="${m.title}" onerror="this.style.opacity=0" />
+      <div class="sr-info">
+        <div class="sr-title">${m.title}</div>
+        <div class="sr-meta">${m.year||''} · ${(m.genres||[])[0]||''} · ★${m.rating||''}</div>
       </div>
-    </div>`;
-    document.addEventListener('click', e=>{
-      if (!e.target.closest('.user-wrap')) {
-        document.querySelector('.user-dropdown')?.classList.remove('open');
-      }
-    });
-  } else {
-    area.innerHTML = `<button class="login-btn" onclick="openAuth()">লগইন</button>`;
+    </div>`).join('');
+  dropdown.classList.add('open');
+}
+
+window.closeSearch = function() {
+  document.getElementById('searchDropdown').classList.remove('open');
+}
+
+// ── DETAIL PAGE ──
+window.openDetail = async function(id) {
+  const movie = allMovies.find(m => m.id === id);
+  if (!movie) return;
+
+  // increment views if firebase is set
+  if (CONFIG_SET && db) {
+    updateDoc(doc(db, 'movies', id), { views: increment(1) }).catch(()=>{});
   }
-}
 
-// ── AUTH ACTIONS ──
-function openAuth()  { document.getElementById('authModal').classList.add('open'); }
-function closeAuth() { document.getElementById('authModal').classList.remove('open'); }
-function switchForm(t) {
-  document.getElementById('loginForm').style.display = t==='login' ? '' : 'none';
-  document.getElementById('regForm').style.display   = t==='reg'   ? '' : 'none';
-}
-document.getElementById('authModal').addEventListener('click', e=>{
-  if (e.target===document.getElementById('authModal')) closeAuth();
-});
+  document.getElementById('detailBg').style.backgroundImage = `url(${movie.posterUrl||''})`;
+  document.getElementById('detailPoster').src = movie.posterUrl || '';
+  document.getElementById('detailPoster').alt = movie.title;
+  document.getElementById('detailSource').textContent = movie.source || 'WEB-DL';
+  document.getElementById('detailRating').textContent = movie.rating ? `★ ${movie.rating}` : '';
+  document.getElementById('detailTitle').textContent = movie.title || '';
+  document.getElementById('detailSynopsis').textContent = movie.synopsis || '';
 
-async function doLogin() {
-  const e=document.getElementById('lEmail').value.trim(), p=document.getElementById('lPass').value;
-  const err=document.getElementById('lErr'), btn=document.getElementById('lBtn');
-  err.classList.remove('show');
-  btn.textContent='লগইন হচ্ছে...'; btn.disabled=true;
-  try { await signInWithEmailAndPassword(auth,e,p); closeAuth(); showToast('লগইন সফল ✓','s'); }
-  catch(er) { err.textContent=aErr(er.code); err.classList.add('show'); }
-  btn.textContent='লগইন করুন'; btn.disabled=false;
-}
+  document.getElementById('detailMeta').innerHTML = [
+    movie.genres ? `🎬 ${movie.genres.join(', ')}` : '',
+    movie.duration ? `⏱ ${movie.duration}` : '',
+    movie.year ? `📅 ${movie.year}` : '',
+    movie.language ? `🌐 ${movie.language}` : ''
+  ].filter(Boolean).map(s => `<span>${s}</span>`).join('');
 
-async function doRegister() {
-  const n=document.getElementById('rName').value.trim(), e=document.getElementById('rEmail').value.trim(), p=document.getElementById('rPass').value;
-  const err=document.getElementById('rErr'), btn=document.getElementById('rBtn');
-  err.classList.remove('show');
-  if (!n) { err.textContent='নাম দিন।'; err.classList.add('show'); return; }
-  btn.textContent='তৈরি হচ্ছে...'; btn.disabled=true;
-  try {
-    const c=await createUserWithEmailAndPassword(auth,e,p);
-    await updateProfile(c.user,{displayName:n});
-    closeAuth(); showToast(`স্বাগতম, ${n}! ✓`,'s');
-  } catch(er) { err.textContent=aErr(er.code); err.classList.add('show'); }
-  btn.textContent='রেজিস্ট্রেশন'; btn.disabled=false;
-}
+  document.getElementById('detailInfoGrid').innerHTML = [
+    movie.director ? `<div><dt>পরিচালক</dt><dd>${movie.director}</dd></div>` : '',
+    movie.cast ? `<div><dt>অভিনয়ে</dt><dd>${movie.cast}</dd></div>` : '',
+    movie.country ? `<div><dt>দেশ</dt><dd>${movie.country}</dd></div>` : '',
+    movie.studio ? `<div><dt>স্টুডিও</dt><dd>${movie.studio}</dd></div>` : ''
+  ].filter(Boolean).join('');
 
-async function doLogout() { await signOut(auth); showToast('লগআউট হয়েছে','s'); }
-
-function aErr(c) {
-  return ({
-    'auth/invalid-email':'সঠিক ইমেইল দিন।',
-    'auth/user-not-found':'অ্যাকাউন্ট নেই।',
-    'auth/wrong-password':'পাসওয়ার্ড ভুল।',
-    'auth/invalid-credential':'ইমেইল বা পাসওয়ার্ড সঠিক নয়।',
-    'auth/email-already-in-use':'ইমেইলটি ইতিমধ্যে ব্যবহৃত।',
-    'auth/weak-password':'পাসওয়ার্ড কমপক্ষে ৬ অক্ষর।',
-    'auth/too-many-requests':'একটু অপেক্ষা করুন।'
-  }[c]) || 'সমস্যা হয়েছে। আবার চেষ্টা করুন।';
-}
-
-// ── TOAST ──
-function showToast(msg, type='s') {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className=`toast ${type} show`;
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),3500);
-}
-
-// ── HELPER ──
-function x(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-</script>
-</body>
-</html>
+  const links = movie.downloadLinks || [];
+  if (links.length) {
+    document.getElementById('detailDlGrid').innerHTML = links.map((l, i) => {
+      const isRec = l.recommended || (i === Math.floor(links.length/2));
+      return `<div class
